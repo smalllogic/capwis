@@ -2,6 +2,15 @@
 # 防止暴力破解、爬虫、DDoS攻击
 
 class Rack::Attack
+  # 在 Rack 3.x 中，Rack::Request 不再支持 [] 方法，
+  # 而 Rack::Attack 在某些版本或特定路径下可能仍会调用它。
+  # 为了生产环境的稳定性，我们为 Request 类补上这个方法。
+  class Request < ::Rack::Request
+    def [](key)
+      self.env[key]
+    end
+  end
+
   # 缓存存储（使用Rails.cache）
   # 在生产环境中建议使用 Redis 或其他持久化存储，这里默认使用 Rails.cache
   # 如果 config/environments/production.rb 中配置了 :solid_cache_store，Rack::Attack 将会自动使用它
