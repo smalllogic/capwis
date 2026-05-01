@@ -102,11 +102,19 @@ class Rack::Attack
   # 当被限流时返回429状态码
   self.throttled_responder = lambda do |env|
     now = Time.now.utc
+    # 使用 Rack::Request 而不是 Rack::Attack::Request，以防环境不一致
+    request = Rack::Request.new(env)
+    
+    # 彻底改变获取 match_data 的方式，增加更多容错性
     match_data = env["rack.attack.match_data"]
-    match_data = {} unless match_data.is_a?(Hash)
-
-    limit = match_data[:limit] || 0
-    period = match_data[:period] || 60
+    # 如果 match_data 存在但不是 Hash 或类似于 Hash 的对象，则设为空 Hash
+    # 同时使用更稳健的类型检查
+    unless match_data.respond_to?(:[]) && !match_data.is_a?(String)
+      match_data = {}
+    end
+    
+    limit = (match_data[:limit] rescue nil) || 0
+    period = (match_data[:period] rescue nil) || 60
 
     headers = {
       "RateLimit-Limit" => limit.to_s,
@@ -115,7 +123,7 @@ class Rack::Attack
       "Content-Type" => "text/html",
     }
     # 根据路径返回不同的提示消息
-    path = env['PATH_INFO']
+    path = request.path
     message = if path == '/users/sign_in'
       '登录尝试过于频繁，请稍后再试。Too many login attempts, please try again later.'
     elsif path == '/users/password'
