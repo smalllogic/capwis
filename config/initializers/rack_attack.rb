@@ -100,15 +100,16 @@ class Rack::Attack
 
   ### 自定义响应 ###
   # 当被限流时返回429状态码
-  self.throttled_responder = lambda do |env|
+  # 注意：在 Rack::Attack 6.x 中，throttled_responder 接收的是 request 对象 (Rack::Attack::Request)
+  # 而在 Rack 3.x 中，request 对象不再响应 [] 方法，必须通过 request.env 访问
+  self.throttled_responder = lambda do |request|
     now = Time.now.utc
-    # 使用 Rack::Request 而不是 Rack::Attack::Request，以防环境不一致
-    request = Rack::Request.new(env)
     
     # 彻底改变获取 match_data 的方式，增加更多容错性
-    match_data = env["rack.attack.match_data"]
+    # 必须通过 request.env 访问，因为 request 是 Rack::Attack::Request 对象
+    match_data = request.env["rack.attack.match_data"]
+    
     # 如果 match_data 存在但不是 Hash 或类似于 Hash 的对象，则设为空 Hash
-    # 同时使用更稳健的类型检查
     unless match_data.respond_to?(:[]) && !match_data.is_a?(String)
       match_data = {}
     end
@@ -122,6 +123,7 @@ class Rack::Attack
       "RateLimit-Reset" => (now + (period - now.to_i % period)).to_s,
       "Content-Type" => "text/html",
     }
+    
     # 根据路径返回不同的提示消息
     path = request.path
     message = if path == '/users/sign_in'
@@ -138,7 +140,7 @@ class Rack::Attack
   end
 
   ### 自定义封禁响应 ###
-  self.blocklisted_responder = lambda do |env|
+  self.blocklisted_responder = lambda do |request|
     [403, { 'Content-Type' => 'text/html' }, ["Access Denied. 访问被拒绝。\n"]]
   end
 
