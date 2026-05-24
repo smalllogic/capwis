@@ -21,12 +21,4 @@ class NotificationMailer < ApplicationMailer
     )
   end
 
-  def admin_login_otp(user)
-    @user = user
-    @otp = user.login_otp
-    mail(
-      to: @user.email,
-      subject: "SINOWER Admin Login Verification Code / 后台登录验证码"
-    )
-  end
 end
