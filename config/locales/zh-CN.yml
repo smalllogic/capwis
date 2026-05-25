@@ -344,4 +344,5 @@ zh-CN:
   cookie_banner:
     message: "我们收集 IP 地址用于分析和安全目的。"
     accept: "接受"
+    decline: "拒绝"
     privacy_policy: "隐私政策"

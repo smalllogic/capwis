@@ -338,4 +338,5 @@ en:
   cookie_banner:
     message: "We collect IP addresses for analysis and security purposes."
     accept: "Accept"
+    decline: "Decline"
     privacy_policy: "Privacy Policy"

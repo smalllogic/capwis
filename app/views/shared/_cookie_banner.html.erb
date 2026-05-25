@@ -1,11 +1,33 @@
 <div x-data="{ 
        show: false,
+       setCookie(name, value, days) {
+         const date = new Date();
+         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+         const expires = '; expires=' + date.toUTCString();
+         document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=Lax';
+       },
+       getCookie(name) {
+         const nameEQ = name + '=';
+         const ca = document.cookie.split(';');
+         for(let i=0; i < ca.length; i++) {
+           let c = ca[i];
+           while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+           if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+         }
+         return null;
+       },
        accept() {
          localStorage.setItem('cookie_accepted', 'true');
+         this.setCookie('ip_tracking_allowed', 'true', 365);
+         this.show = false;
+       },
+       decline() {
+         localStorage.setItem('cookie_accepted', 'declined');
+         this.setCookie('ip_tracking_allowed', 'false', 365);
          this.show = false;
        }
      }" 
-     x-init="setTimeout(() => { show = localStorage.getItem('cookie_accepted') !== 'true' }, 100)"
+     x-init="setTimeout(() => { show = !localStorage.getItem('cookie_accepted') }, 100)"
      x-show="show"
      x-transition:enter="transition ease-out duration-300"
      x-transition:enter-start="translate-y-full opacity-0"
@@ -22,7 +44,10 @@
           <%= t('cookie_banner.message') %>
         </p>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3 sm:gap-4 flex-wrap justify-center sm:justify-end">
+        <button @click="decline()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl font-bold transition-all active:scale-95 whitespace-nowrap border border-white/10">
+          <%= t('cookie_banner.decline') %>
+        </button>
         <button @click="accept()" class="px-8 py-3 bg-white hover:bg-slate-100 text-slate-900 rounded-2xl font-black transition-all shadow-lg active:scale-95 whitespace-nowrap">
           <%= t('cookie_banner.accept') %>
         </button>

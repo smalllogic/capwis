@@ -96,8 +96,8 @@ class Rack::Attack
   end
 
   ### Throttle 5: 全站通用限制 ###
-  # 同一IP每分钟最多60次请求（防止爬虫/DDoS）
-  throttle('general/ip', limit: 60, period: 1.minute) do |req|
+  # 同一IP每分钟最多120次请求（防止爬虫/DDoS）
+  throttle('general/ip', limit: 120, period: 1.minute) do |req|
     req.ip unless req.path.start_with?('/assets/', '/up', '/admin')
   end
 

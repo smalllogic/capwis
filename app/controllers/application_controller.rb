@@ -22,14 +22,19 @@ class ApplicationController < ActionController::Base
     return if session_id.blank?
 
     # 尝试获取真实客户端 IP (处理代理服务器情况)
-    # 优先获取 X-Forwarded-For，它是大多数反向代理使用的标准头
-    forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
-    real_ip = if forwarded_for.present?
-                # 取第一个（原始客户端）并进行基本的格式检查
-                forwarded_for.split(',').first&.strip
-              else
-                request.env['HTTP_X_REAL_IP'] || request.remote_ip
-              end
+    # 如果用户在 cookie 中明确拒绝了 IP 追踪，则使用匿名 IP
+    if cookies[:ip_tracking_allowed] == "false"
+      real_ip = "0000.0000.0000"
+    else
+      # 优先获取 X-Forwarded-For，它是大多数反向代理使用的标准头
+      forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
+      real_ip = if forwarded_for.present?
+                  # 取第一个（原始客户端）并进行基本的格式检查
+                  forwarded_for.split(',').first&.strip
+                else
+                  request.env['HTTP_X_REAL_IP'] || request.remote_ip
+                end
+    end
 
     last_visit = VisitRecord.where(session_id: session_id)
                             .where("visit_time > ?", 3.hours.ago)
