@@ -1,54 +1,45 @@
 Rails.application.routes.draw do
-  scope "(:locale)", locale: /en|zh-CN/ do
-    get "skus/show"
-    get "categories/index"
-    get "categories/show"
-    root "home#index"
-    get "about", to: "home#about"
-    get "all_products", to: "home#all_products"
-    get "contact", to: "home#contact"
-    post "contact", to: "home#create_contact"
-    get "warranty", to: "home#warranty"
-    post "warranty_inquiry", to: "home#create_warranty_inquiry"
+  get "skus/show"
+  get "categories/index"
+  get "categories/show"
+  root "home#index"
+  get "about", to: "home#about"
+  get "factory", to: "home#factory"
+  get "privacy", to: "home#privacy"
+  get "all_products", to: "home#all_products"
+  get "contact", to: "home#contact"
+  post "contact", to: "home#create_contact"
 
-    namespace :admin do
-      root to: "dashboard#index"
-      get "dashboard", to: "dashboard#index"
-      resources :categories
-      resources :skus do
-        collection do
-          get :export
-          patch :update_positions
-        end
-        member do
-          delete :delete_image
-          delete :delete_manual
-          delete :delete_spec_sheet
-        end
+  namespace :admin do
+    root to: "dashboard#index"
+    get "dashboard", to: "dashboard#index"
+    resources :categories
+    resources :skus do
+      collection do
+        get :export
+        patch :update_positions
       end
-      resources :contact_messages, only: [:index, :show, :destroy]
-      resources :warranty_inquiries, only: [:index, :show, :destroy]
-      resources :warranty_pdfs do
-        member do
-          get :download
-        end
-      end
-      resources :users, only: [:index, :show, :destroy]
-      resources :visit_records, only: [:index] do
-        collection do
-          delete :clean
-        end
+      member do
+        delete :delete_image
       end
     end
-
-    %w[a b c].each do |kind|
-      get kind, to: "channels#index", defaults: { kind: kind }, as: "#{kind}_channel"
+    resources :posts
+    resources :contact_messages, only: [:index, :show, :destroy]
+    resources :users, only: [:index, :show, :destroy]
+    resources :visit_records, only: [:index] do
+      collection do
+        delete :clean
+      end
     end
-
-    resources :categories, only: [:index, :show]
-    resources :skus, only: [:show]
-    
   end
+
+  %w[a b c].each do |kind|
+    get kind, to: "channels#index", defaults: { kind: kind }, as: "#{kind}_channel"
+  end
+
+  resources :categories, only: [:index, :show]
+  resources :skus, only: [:show]
+  resources :posts, only: [:index, :show]
 
   devise_for :users, controllers: {
     sessions: 'users/sessions'

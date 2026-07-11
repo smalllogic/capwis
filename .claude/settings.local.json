@@ -2,7 +2,29 @@
   "permissions": {
     "allow": [
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(rails generate *)",
+      "Bash(rails db:migrate)",
+      "Bash(ruby -e \"require 'erb'; ERB.new\\(File.read\\('app/views/home/factory.html.erb'\\)\\).result\")",
+      "Bash(cp \"/var/folders/pn/_bh80x091bv7wrw65hcsgr4c0000gn/T/ai-chat-attachment-8545856734172757924.png\" /Users/shibin/hat/app/assets/images/product_baseball_cap.png)",
+      "Bash(cp \"/var/folders/pn/_bh80x091bv7wrw65hcsgr4c0000gn/T/ai-chat-attachment-15181364705716874099.png\" /Users/shibin/hat/app/assets/images/product_bucket_cap.png)",
+      "Bash(cp \"/var/folders/pn/_bh80x091bv7wrw65hcsgr4c0000gn/T/ai-chat-attachment-11836148832298792399.png\" /Users/shibin/hat/app/assets/images/product_flat_bill_cap.png)",
+      "Bash(cp \"/var/folders/pn/_bh80x091bv7wrw65hcsgr4c0000gn/T/ai-chat-attachment-4664597648270286598.png\" /Users/shibin/hat/app/assets/images/product_kids_cap.png)",
+      "Bash(cp \"/var/folders/pn/_bh80x091bv7wrw65hcsgr4c0000gn/T/ai-chat-attachment-2964380638339546351.png\" /Users/shibin/hat/app/assets/images/product_knit_beanie_cap.png)",
+      "Bash(rails setup_products:run)",
+      "Bash(rails routes *)",
+      "Bash(rails runner *)",
+      "Bash(sed -i '' -e 's/QINGDAO LINCAPS/QINGDAO Capwis/g' -e 's/Explore All LINCAPS Products/Explore All Capwis Products/g' -e 's/About LINCAPS/About Capwis/g' -e 's/LINCAPS delivers/Capwis delivers/g' -e 's/LINCAPS is committed/Capwis is committed/g' -e 's/As LINCAPS continues/As Capwis continues/g' -e 's/LINCAPS provides/Capwis provides/g' -e 's/LINCAPS aims/Capwis aims/g' -e 's/Why Partner With LINCAPS/Why Partner With Capwis/g' -e 's/Contact LINCAPS/Contact Capwis/g' -e 's/Partner with LINCAPS/Partner with Capwis/g' config/locales/en.yml)",
+      "Bash(sed -i '' 's/module Lincaps/module Capwis/g' config/application.rb)",
+      "Bash(sed -i '' 's/lincapsbucket/capwisbucket/g' config/storage.yml)",
+      "Bash(sed -i '' -e 's/service: lincaps/service: capwis/g' -e 's|image: your-user/lincaps|image: your-user/capwis|g' -e 's/lincaps_storage/capwis_storage/g' config/deploy.yml)",
+      "Bash(sed -i '' -e 's/alt: \"Lincaps Factory\"/alt: \"Capwis Factory\"/g' -e 's/<!-- 为什么选择 LINCAPS?/<!-- 为什么选择 Capwis?/g' -e 's/LINCAPS provides partners/Capwis provides partners/g' -e 's/>LINCAPS · Qingdao</>Capwis · Qingdao</g' app/views/home/about.html.erb)",
+      "Bash(sed -i '' 's/>LINCAPS · Qingdao</>Capwis · Qingdao</g' app/views/skus/show.html.erb)",
+      "Bash(sed -i '' 's/Qingdao Lincaps\"/Qingdao Capwis\"/g' app/views/layouts/application.html.erb)",
+      "Bash(sed -i '' 's/lincaps-db/capwis-db/g' config/deploy.yml)",
+      "Bash(sort -k5 -rh)",
+      "Bash(sips --version)",
+      "Bash(awk '{print $5, $9}')"
     ]
   }
 }

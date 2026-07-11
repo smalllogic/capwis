@@ -1,11 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: "Baseball Cap Classic"
   category: one
-  skuable: one (ASkuDetail)
+  price: 15.0
+  status: "active"
+  position: 1
+  fabric: "Cotton"
+  closure: "Plastic Buckle"
 
 two:
-  name: MyString
+  name: "Winter Beanie"
   category: two
-  skuable: two (ASkuDetail)
+  price: 12.0
+  status: "active"
+  position: 2
+  fabric: "Wool"
+  closure: "None"

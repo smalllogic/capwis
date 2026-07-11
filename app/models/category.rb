@@ -4,7 +4,6 @@ class Category < ApplicationRecord
   has_many :skus, dependent: :destroy
 
   validates :name, presence: true
-  validates :name_zh, presence: true
   validates :category_kind, presence: true, inclusion: { in: %w[a b c d] }
   
   scope :visible, -> { where(hidden: false) }
@@ -49,7 +48,7 @@ class Category < ApplicationRecord
   end
 
   def localized_name
-    I18n.locale == :"zh-CN" ? name_zh : name
+    name
   end
 
   private

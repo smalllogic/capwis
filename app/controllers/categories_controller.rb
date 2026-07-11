@@ -17,16 +17,16 @@ class CategoriesController < ApplicationController
     if params[:category_id].present?
       begin
         @current_category = Category.visible.includes(parent: { parent: :parent }).find(params[:category_id])
-        @skus = @current_category.all_descendant_skus.where(status: 'active').includes(:category, images_attachments: :blob).preload(:skuable).page(params[:page]).per(20)
+        @skus = @current_category.all_descendant_skus.where(status: 'active').includes(:category, images_attachments: :blob).page(params[:page]).per(20)
       rescue ActiveRecord::RecordNotFound
         redirect_to categories_path, alert: "未找到指定的分类"
         return
       end
     else
       if @kind.present?
-        @skus = Sku.joins(:category).where(categories: { category_kind: @kind, hidden: false }, status: 'active').includes(:category, images_attachments: :blob).preload(:skuable).order(position: :desc, created_at: :desc).page(params[:page]).per(20)
+        @skus = Sku.joins(:category).where(categories: { category_kind: @kind, hidden: false }, status: 'active').includes(:category, images_attachments: :blob).order(position: :desc, created_at: :desc).page(params[:page]).per(20)
       else
-        @skus = Sku.joins(:category).where(categories: { hidden: false }, status: 'active').includes(:category, images_attachments: :blob).preload(:skuable).order(position: :desc, created_at: :desc).page(params[:page]).per(20)
+        @skus = Sku.joins(:category).where(categories: { hidden: false }, status: 'active').includes(:category, images_attachments: :blob).order(position: :desc, created_at: :desc).page(params[:page]).per(20)
       end
     end
   end

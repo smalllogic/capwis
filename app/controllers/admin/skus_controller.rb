@@ -1,12 +1,12 @@
 class Admin::SkusController < Admin::BaseController
-  before_action :set_sku, only: [:show, :edit, :update, :destroy, :delete_image, :delete_manual, :delete_spec_sheet]
+  before_action :set_sku, only: [:show, :edit, :update, :destroy, :delete_image]
 
   def index
     @q = params[:q]
     @category_id = params[:category_id]
     session[:sku_list_category_id] = @category_id
 
-    @skus = Sku.all.preload(:skuable).includes(category: :parent, images_attachments: :blob).order(position: :desc, created_at: :desc)
+    @skus = Sku.all.includes(category: :parent, images_attachments: :blob).order(position: :desc, created_at: :desc)
 
     if @q.present?
       @skus = @skus.where("LOWER(name) LIKE ?", "%#{@q.downcase}%")
@@ -28,7 +28,7 @@ class Admin::SkusController < Admin::BaseController
   end
 
   def export
-    @skus = Sku.preload(:skuable).includes(category: :parent, images_attachments: :blob, manual_attachment: :blob, spec_sheet_attachment: :blob).order(position: :desc, created_at: :desc)
+    @skus = Sku.includes(category: :parent, images_attachments: :blob).order(position: :desc, created_at: :desc)
     send_data generate_csv(@skus), filename: "all-skus-#{Date.today}.csv"
   end
 
@@ -58,34 +58,9 @@ class Admin::SkusController < Admin::BaseController
     category = Category.find_by(id: category_id) if category_id.present?
     
     @sku = Sku.new(category: category)
-    
-    if category && category.leaf?
-      case category.category_kind
-      when "a"
-        @sku.skuable = ASkuDetail.new
-      when "b"
-        @sku.skuable = BSkuDetail.new
-      when "c"
-        @sku.skuable = CSkuDetail.new
-      else
-        @sku.skuable = nil
-      end
-    else
-      @sku.skuable = nil
-    end
   end
 
   def edit
-    if @sku.category && @sku.category.leaf? && @sku.skuable.nil?
-      case @sku.category.category_kind
-      when "a"
-        @sku.skuable = ASkuDetail.new
-      when "b"
-        @sku.skuable = BSkuDetail.new
-      when "c"
-        @sku.skuable = CSkuDetail.new
-      end
-    end
   end
 
   def create
@@ -98,18 +73,14 @@ class Admin::SkusController < Admin::BaseController
       # 注意：不要过滤 position 字段，因为 0.blank? 是 true
       # 提取图片/文件参数，用于后续单独处理，避免 Sku.new(params) 可能引起的自动分配
       images = filtered_params.delete(:images)
-      manual = filtered_params.delete(:manual)
-      spec_sheet = filtered_params.delete(:spec_sheet)
 
       @sku = Sku.new(filtered_params)
       if @sku.save
         # 显式使用 attach 附加图片/文件
         @sku.images.attach(images) if images.present?
-        @sku.manual.attach(manual) if manual.present?
-        @sku.spec_sheet.attach(spec_sheet) if spec_sheet.present?
 
         update_image_positions(@sku, image_positions)
-        redirect_to sku_list_path, notice: "SKU 创建成功。"
+        redirect_to sku_list_path, notice: "SKU created successfully."
       else
         Rails.logger.error "SKU Create Failed: #{@sku.errors.full_messages.join(', ')}"
         render :new, status: :unprocessable_entity
@@ -117,7 +88,8 @@ class Admin::SkusController < Admin::BaseController
     rescue StandardError => e
       Rails.logger.error "SKU Create Exception: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
-      @sku.errors.add(:base, "保存出错: #{e.message}. 请检查图片或存储配置。")
+      @sku ||= Sku.new
+      @sku.errors.add(:base, "Save error: #{e.message}.")
       render :new, status: :unprocessable_entity
     end
   end
@@ -134,17 +106,13 @@ class Admin::SkusController < Admin::BaseController
       # 那么上传新图片会附加到旧图片。如果上传的是空数组，则不进行任何操作。
       # 提取图片/文件参数，用于后续单独处理，避免 update 方法的全量替换行为
       images = filtered_params.delete(:images)
-      manual = filtered_params.delete(:manual)
-      spec_sheet = filtered_params.delete(:spec_sheet)
 
       if @sku.update(filtered_params)
         # 显式使用 attach 附加图片，确保不替换旧图片
         @sku.images.attach(images) if images.present?
-        @sku.manual.attach(manual) if manual.present?
-        @sku.spec_sheet.attach(spec_sheet) if spec_sheet.present?
 
         update_image_positions(@sku, image_positions)
-        redirect_to sku_list_path, notice: "SKU 更新成功。"
+        redirect_to sku_list_path, notice: "SKU updated successfully."
       else
         Rails.logger.error "SKU Update Failed: #{@sku.errors.full_messages.join(', ')}"
         render :edit, status: :unprocessable_entity
@@ -152,38 +120,27 @@ class Admin::SkusController < Admin::BaseController
     rescue StandardError => e
       Rails.logger.error "SKU Update Exception: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
-      @sku.errors.add(:base, "更新出错: #{e.message}. 请检查图片或存储配置。")
+      @sku ||= Sku.find(params[:id]) if params[:id]
+      @sku.errors.add(:base, "Update error: #{e.message}.") if @sku
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @sku.destroy
-    redirect_to sku_list_path, notice: "SKU 已删除。"
+    redirect_to sku_list_path, notice: "SKU deleted successfully."
   end
 
   def delete_image
-    return redirect_to sku_list_path, alert: "SKU 未找到。" unless @sku
+    return redirect_to sku_list_path, alert: "SKU not found." unless @sku
     
     image = @sku.images.find(params[:image_id])
     image.purge
-    redirect_back fallback_location: edit_admin_sku_path(@sku), notice: "图片已删除。"
+    redirect_back fallback_location: edit_admin_sku_path(@sku), notice: "Image deleted successfully."
   rescue ActiveRecord::RecordNotFound
-    redirect_back fallback_location: edit_admin_sku_path(@sku), alert: "图片未找到。"
+    redirect_back fallback_location: edit_admin_sku_path(@sku), alert: "Image not found."
   rescue ActiveStorage::InvariableError
-    redirect_back fallback_location: edit_admin_sku_path(@sku), alert: "文件格式错误，无法处理。"
-  end
-
-  def delete_manual
-    return redirect_to sku_list_path, alert: "SKU 未找到。" unless @sku
-    @sku.manual.purge if @sku.manual.attached?
-    redirect_back fallback_location: edit_admin_sku_path(@sku), notice: "技术手册已删除。"
-  end
-
-  def delete_spec_sheet
-    return redirect_to sku_list_path, alert: "SKU 未找到。" unless @sku
-    @sku.spec_sheet.purge if @sku.spec_sheet.attached?
-    redirect_back fallback_location: edit_admin_sku_path(@sku), notice: "规格表已删除。"
+    redirect_back fallback_location: edit_admin_sku_path(@sku), alert: "Invalid file format."
   end
 
   private
@@ -192,20 +149,18 @@ class Admin::SkusController < Admin::BaseController
     require 'csv'
     CSV.generate(headers: true) do |csv|
       # 定义表头
-      base_headers = ["ID", "排序权重", "名称", "频道", "分类路径", "价格", "库存", "状态", "图片URLs", "说明书URL", "规格书URL"]
-      detail_headers = [
-        "net_capacity", "unit_dimensions", "packaging_dimensions", "voltage_frequency", "temp_range", 
-        "burners_and_control_method", "gas_type", "intake_tube_pressure", "per_btu", "total_btu", 
-        "regulator", "work_area", "exterior_dimensions", "product_dimensions", "sink_bowl_dimensions", 
-        "sink_depth", "leg_bracing", "faucet_and_drain", "standard_features_html", "standard_features_zh_html"
+      base_headers = ["ID", "Position", "Name", "Channel", "Category Path", "Price", "Status", "Image URLs"]
+      hat_headers = [
+        "Item", "Item No.", "Product Name", "Material", "Specification", 
+        "Head Circumference", "Brim Length", "Closure Type", "Embroidery/Print", 
+        "Color", "MOQ", "Sample Time", "Production Lead Time", "Packing", 
+        "Carton Size", "Gross Weight"
       ]
-      csv << base_headers + detail_headers
+      csv << base_headers + hat_headers + ["Standard Features HTML"]
 
-      # 一次性加载所有分类并按 ID 索引，减少循环内的数据库查询
       categories_cache = Category.all.includes(:parent).index_by(&:id)
 
       skus.each do |sku|
-        # 使用缓存构建路径
         cat = categories_cache[sku.category_id]
         path_segments = []
         while cat
@@ -215,31 +170,20 @@ class Admin::SkusController < Admin::BaseController
         category_path = path_segments.join(" > ")
 
         image_urls = sku.images.attached? ? sku.images.map { |img| url_for(img) }.join(",") : ""
-        manual_url = sku.manual.attached? ? url_for(sku.manual) : ""
-        spec_sheet_url = sku.spec_sheet.attached? ? url_for(sku.spec_sheet) : ""
         
         row = [
-          sku.id, sku.position, sku.name, sku.category.category_kind, category_path, sku.price, sku.stock, sku.status,
-          image_urls, manual_url, spec_sheet_url
+          sku.id, sku.position, sku.name, sku.category.category_kind, category_path, sku.price, sku.status,
+          image_urls
         ]
         
-        # 详情字段
-        detail = sku.skuable
-        if detail
-          detail_row = [
-            detail.try(:net_capacity), detail.try(:unit_dimensions), detail.try(:packaging_dimensions), 
-            detail.try(:voltage_frequency), detail.try(:temp_range), detail.try(:burners_and_control_method), 
-            detail.try(:gas_type), detail.try(:intake_tube_pressure), detail.try(:per_btu), 
-            detail.try(:total_btu), detail.try(:regulator), detail.try(:work_area), 
-            detail.try(:exterior_dimensions), detail.try(:product_dimensions), 
-            detail.try(:sink_bowl_dimensions), detail.try(:sink_depth), detail.try(:leg_bracing), 
-            detail.try(:faucet_and_drain), detail.try(:standard_features).to_s, detail.try(:standard_features_zh).to_s
-          ]
-        else
-          detail_row = Array.new(detail_headers.size, nil)
-        end
+        hat_row = [
+          sku.item, sku.item_no, sku.product_name, sku.material, sku.specification,
+          sku.head_circumference, sku.brim_length, sku.closure_type, sku.embroidery_print,
+          sku.color, sku.moq, sku.sample_time, sku.production_lead_time, sku.packing,
+          sku.carton_size, sku.gross_weight
+        ]
         
-        csv << row + detail_row
+        csv << row + hat_row + [sku.standard_features.to_s]
       end
     end
   end
@@ -267,16 +211,12 @@ class Admin::SkusController < Admin::BaseController
 
   def sku_params
     params.require(:sku).permit(
-      :name, :category_id, :price, :stock, :status, :position, :manual, :spec_sheet, :skuable_type, images: [],
-      image_positions: {},
-      skuable_attributes: [
-        :id, :net_capacity, :unit_dimensions, :packaging_dimensions,
-        :voltage_frequency, :temp_range, :standard_features, :standard_features_zh,
-        :burners_and_control_method, :gas_type, :intake_tube_pressure,
-        :per_btu, :total_btu, :regulator, :work_area,
-        :exterior_dimensions, :standard_features_zh,
-        :product_dimensions, :sink_bowl_dimensions, :sink_depth, :leg_bracing, :faucet_and_drain
-      ]
+      :name, :category_id, :price, :status, :position,
+      :item, :item_no, :product_name, :material, :specification, :head_circumference,
+      :brim_length, :closure_type, :embroidery_print, :color, :moq, :sample_time,
+      :production_lead_time, :packing, :carton_size, :gross_weight,
+      :standard_features,
+      images: [], image_positions: {}
     )
   end
 end

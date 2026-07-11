@@ -42,6 +42,7 @@
       <div class="flex-1 text-center sm:text-left">
         <p class="text-slate-300 font-medium leading-relaxed">
           <%= t('cookie_banner.message') %>
+          <%= link_to t('cookie_banner.privacy_policy'), privacy_path, class: "text-white underline hover:text-primary transition-colors ml-1" %>
         </p>
       </div>
       <div class="flex items-center gap-3 sm:gap-4 flex-wrap justify-center sm:justify-end">

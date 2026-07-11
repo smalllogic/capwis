@@ -10,15 +10,4 @@ class NotificationMailer < ApplicationMailer
       subject: "New Contact Message: #{@contact_message.subject}"
     )
   end
-
-  def warranty_notification(warranty_inquiry)
-    @warranty_inquiry = warranty_inquiry
-    recipients = ENV.fetch("WARRANTY_FORM_TO", "admin@example.com").split(",")
-
-    mail(
-      to: recipients,
-      subject: "New Warranty Claim: #{@warranty_inquiry.subject}"
-    )
-  end
-
 end

@@ -62,7 +62,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "sinowerus.com") }
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "lincaps.com") }
   Rails.application.routes.default_url_options = config.action_mailer.default_url_options
 
   # Use Resend HTTP API for email delivery (more reliable than SMTP)
@@ -84,8 +84,8 @@ Rails.application.configure do
   # Enable DNS rebinding protection and other `Host` header attacks.
   # Allow Railway dynamic subdomains and explicit production domain.
   config.hosts.clear
-  config.hosts << "www.sinowerus.com"
-  config.hosts << "sinowerus.com"
+  config.hosts << "www.lincaps.com"
+  config.hosts << "lincaps.com"
   config.hosts << /.*/ # Allow all hosts (Railway handles SSL/redirect)
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }

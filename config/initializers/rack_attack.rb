@@ -89,12 +89,6 @@ class Rack::Attack
     req.ip if req.path == '/contact' && req.post?
   end
 
-  ### Throttle 4: 保修表单限制 ###
-  # 同一IP每小时最多10次保修表单提交
-  throttle('warranty/ip', limit: 10, period: 1.hour) do |req|
-    req.ip if req.path == '/warranty_inquiry' && req.post?
-  end
-
   ### Throttle 5: 全站通用限制 ###
   # 同一IP每分钟最多120次请求（防止爬虫/DDoS）
   throttle('general/ip', limit: 120, period: 1.minute) do |req|
@@ -139,7 +133,7 @@ class Rack::Attack
       '登录尝试过于频繁，请稍后再试。Too many login attempts, please try again later.'
     elsif path == '/users/password'
       '密码重置请求过于频繁，请稍后再试。Too many password reset requests, please try again later.'
-    elsif path == '/contact' || path == '/warranty_inquiry'
+    elsif path == '/contact'
       '提交过于频繁，请稍后再试。Too many submissions, please try again later.'
     else
       '请求过于频繁，请稍后再试。Too many requests, please try again later.'

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :check_submission_rate_limit, only: [:create_contact, :create_warranty_inquiry]
+  before_action :check_submission_rate_limit, only: [:create_contact]
 
   def index
   end
@@ -14,6 +14,12 @@ class HomeController < ApplicationController
   end
 
   def about
+  end
+
+  def privacy
+  end
+
+  def factory
   end
 
   def create_contact
@@ -35,45 +41,12 @@ class HomeController < ApplicationController
     end
   end
 
-  def warranty
-    @warranty_inquiry = WarrantyInquiry.new
-    @refrigeration_pdf = WarrantyPdf.refrigeration
-    @cooking_pdf = WarrantyPdf.cooking
-    @stainless_pdf = WarrantyPdf.stainless
-    @claim_form_pdf = WarrantyPdf.claim_form
-    @spare_parts_pdf = WarrantyPdf.spare_parts
-  end
-
-  def create_warranty_inquiry
-    if params[:privacy_agreement_warranty] != "1"
-      redirect_to warranty_path, alert: t('home.warranty.form.privacy_error')
-      return
-    end
-
-    @warranty_inquiry = WarrantyInquiry.new(warranty_inquiry_params)
-    if @warranty_inquiry.save
-      begin
-        NotificationMailer.warranty_notification(@warranty_inquiry).deliver_later
-      rescue => e
-        Rails.logger.error "Failed to queue warranty email: #{e.message}"
-      end
-      redirect_to warranty_path, notice: t('home.warranty.feedback_success', default: "Message sent successfully. We will contact you as soon as possible. / 消息已成功发送，我们会尽快与您联系。")
-    else
-      @refrigeration_pdf = WarrantyPdf.refrigeration
-      @cooking_pdf = WarrantyPdf.cooking
-      @stainless_pdf = WarrantyPdf.stainless
-      @claim_form_pdf = WarrantyPdf.claim_form
-      @spare_parts_pdf = WarrantyPdf.spare_parts
-      render :warranty, status: :unprocessable_entity
-    end
-  end
-
   private
 
   def check_submission_rate_limit
     last_submission = session[:last_submission_time]
     if last_submission.present? && Time.parse(last_submission) > 1.minute.ago
-      redirect_to (action_name == 'create_contact' ? contact_path : warranty_path), 
+      redirect_to contact_path, 
                   alert: t('home.submission_limit', default: "You are submitting too frequently. Please try again in 1 minute. / 您提交得太频繁了，请在 1 分钟后再试。")
       return
     end
@@ -82,9 +55,5 @@ class HomeController < ApplicationController
 
   def contact_params
     params.require(:contact_message).permit(:name, :email, :subject, :message)
-  end
-
-  def warranty_inquiry_params
-    params.require(:warranty_inquiry).permit(:subject, :product_type, :model_number, :description, :name, :phone, :email)
   end
 end

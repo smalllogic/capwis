@@ -29,11 +29,6 @@
       </div>
 
       <div>
-        <%= f.label :stock, "库存", class: "block text-sm font-medium text-slate-700 mb-2" %>
-        <%= f.number_field :stock, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-      </div>
-
-      <div>
         <%= f.label :status, "状态", class: "block text-sm font-medium text-slate-700 mb-2" %>
         <%= f.select :status, [['上架 (前台显示)', 'active'], ['草稿 (隐藏)', 'draft'], ['归档', 'archived']], { prompt: "请选择 SKU 状态" }, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
         <p class="mt-1 text-xs text-slate-500 italic">选择"草稿"时，该 SKU 不会在前台网站显示。</p>
@@ -45,11 +40,11 @@
         <p class="mt-1 text-xs text-slate-500 italic">默认值为 0。前台展示时按此权重倒序排列（数字越大越靠前）。</p>
       </div>
 
-      <div>
-        <%= f.label :images, "产品图片 (支持多张)", class: "block text-sm font-medium text-slate-700 mb-2" %>
+      <div class="md:col-span-2">
+        <%= f.label :images, "Product Images", class: "block text-sm font-medium text-slate-700 mb-2" %>
         <%= f.file_field :images, multiple: true, accept: "image/*", class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500", 
                         include_hidden: false %>
-        <p class="mt-1 text-xs text-slate-500 italic">上传新图片将附加到现有图片。按住 Ctrl/Command 键可选择多张图片。只接受 JPEG, PNG, GIF, WebP, BMP 格式的图片。</p>
+        <p class="mt-1 text-xs text-slate-500 italic">Uploading new images will append to existing ones. Hold Ctrl/Command to select multiple. JPEG, PNG, GIF, WebP, BMP only.</p>
         
         <% if @sku.images.attached? %>
           <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -59,18 +54,18 @@
                   <% begin %>
                     <%= image_tag image.variant(resize_to_limit: [200, 200]), class: "w-full h-32 object-contain rounded bg-white" %>
                   <% rescue ArgumentError, ActiveStorage::InvariableError => e %>
-                    <div class="w-full h-32 bg-red-50 rounded border border-red-200 flex items-center justify-center text-red-400 text-xs" title="文件错误：<%= e.message %>">无法预览</div>
+                    <div class="w-full h-32 bg-red-50 rounded border border-red-200 flex items-center justify-center text-red-400 text-xs" title="File Error: <%= e.message %>">No Preview</div>
                   <% end %>
                 </div>
                 
                 <div class="flex items-center gap-1.5">
-                  <span class="text-xs text-slate-500 whitespace-nowrap">排序:</span>
+                  <span class="text-xs text-slate-500 whitespace-nowrap">Sort:</span>
                   <%= number_field_tag "sku[image_positions][#{image.id}]", image.position, 
                                       class: "flex-grow min-w-[2.5rem] px-2 py-1 text-xs border border-slate-300 rounded focus:ring-blue-500 focus:border-blue-500" %>
                 </div>
 
                 <%= link_to delete_image_admin_sku_path(id: @sku.id, image_id: image.id), 
-                          data: { turbo_method: :delete, turbo_confirm: "确定要删除这张图片吗？" },
+                          data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
                           class: "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-lg hover:bg-red-600 transition-colors" do %>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -79,201 +74,102 @@
               </div>
             <% end %>
           </div>
-          <p class="mt-2 text-xs text-slate-500">排序值越小越靠前。修改后请点击下方的“保存 SKU”按钮生效。</p>
-        <% end %>
-      </div>
-
-      <div>
-        <%= f.label :manual, "技术手册 (Manual PDF)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-        <%= f.file_field :manual, accept: "application/pdf", class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-        <p class="mt-1 text-xs text-slate-500 italic">只接受 PDF 格式文件。</p>
-        <% if @sku.manual.attached? %>
-          <div class="mt-1 flex items-center justify-between">
-            <p class="text-xs text-blue-600">已上传：<%= @sku.manual.filename %></p>
-            <%= link_to delete_manual_admin_sku_path(@sku), 
-                        data: { turbo_method: :delete, turbo_confirm: "确定要删除该手册吗？" },
-                        class: "text-red-500 hover:text-red-700 text-xs flex items-center gap-1" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-              </svg>
-              删除
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <div>
-        <%= f.label :spec_sheet, "规格表 (Spec Sheet PDF)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-        <%= f.file_field :spec_sheet, accept: "application/pdf", class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-        <p class="mt-1 text-xs text-slate-500 italic">只接受 PDF 格式文件。</p>
-        <% if @sku.spec_sheet.attached? %>
-          <div class="mt-1 flex items-center justify-between">
-            <p class="text-xs text-blue-600">已上传: <%= @sku.spec_sheet.filename %></p>
-            <%= link_to delete_spec_sheet_admin_sku_path(@sku), 
-                        data: { turbo_method: :delete, turbo_confirm: "确定要删除该规格表吗？" },
-                        class: "text-red-500 hover:text-red-700 text-xs flex items-center gap-1" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-              </svg>
-              删除
-            <% end %>
-          </div>
+          <p class="mt-2 text-xs text-slate-500 italic">Lower values appear first. Click "Save SKU" to apply sort changes.</p>
         <% end %>
       </div>
     </div>
 
-    <!-- 动态详情字段 -->
-    <% if @sku.category && !@sku.category.leaf? %>
-      <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg text-sm text-red-800">
-        警告：所选分类不是叶子分类。SKU 必须挂载在没有子分类的叶子节点上。
+    <!-- Product Details Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div class="md:col-span-2">
+        <h3 class="text-lg font-bold text-slate-800 border-b pb-2 mb-4">Product Specifications</h3>
       </div>
-    <% end %>
+      
+      <div>
+        <%= f.label :item, "Item", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :item, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
 
-    <% if @sku.skuable.present? %>
-      <%= f.hidden_field :skuable_type, value: @sku.skuable_type || (@sku.category&.category_kind ? "#{@sku.category.category_kind.upcase}SkuDetail" : nil) %>
-      <%= f.fields_for :skuable do |sf| %>
-        <% case @sku.skuable_type || (@sku.category&.category_kind ? "#{@sku.category.category_kind.upcase}SkuDetail" : nil) %>
-        <% when 'ASkuDetail' %>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="md:col-span-2">
-              <h3 class="text-lg font-bold text-slate-800 border-b pb-2 mb-4">制冷参数 (ASkuDetail)</h3>
-            </div>
-            <div>
-              <%= sf.label :net_capacity, "净容积", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :net_capacity, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :unit_dimensions, "外形尺寸", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :unit_dimensions, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :temp_range, "温度范围", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :temp_range, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :voltage_frequency, "电压频率", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :voltage_frequency, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div class="md:col-span-2">
-              <%= sf.label :standard_features, "标准特性 (英文)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.rich_text_area :standard_features, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-4" %>
-            </div>
-            <div class="md:col-span-2">
-              <%= sf.label :standard_features_zh, "标准特性 (中文)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.rich_text_area :standard_features_zh, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-          </div>
-        <% when 'BSkuDetail' %>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="md:col-span-2">
-              <h3 class="text-lg font-bold text-slate-800 border-b pb-2 mb-4">烹饪参数 (BSkuDetail)</h3>
-            </div>
-            <div>
-              <%= sf.label :burners_and_control_method, "燃烧器与控制方式", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :burners_and_control_method, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :gas_type, "燃气类型", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :gas_type, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :intake_tube_pressure, "进气管压力 (in.W.C.)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :intake_tube_pressure, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :per_btu, "单头 BTU (B.T.U./h)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :per_btu, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :total_btu, "总 BTU (B.T.U./h)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :total_btu, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :regulator, "调节器", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :regulator, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :work_area, "工作区域 (inch)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :work_area, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :exterior_dimensions, "外形尺寸 (inch)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :exterior_dimensions, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :unit_dimensions, "单位尺寸", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :unit_dimensions, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div class="md:col-span-2">
-              <%= sf.label :standard_features, "标准特性 (英文)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.rich_text_area :standard_features, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-4" %>
-            </div>
-            <div class="md:col-span-2">
-              <%= sf.label :standard_features_zh, "标准特性 (中文)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.rich_text_area :standard_features_zh, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-          </div>
-        <% when 'CSkuDetail' %>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="md:col-span-2">
-              <h3 class="text-lg font-bold text-slate-800 border-b pb-2 mb-4">不锈钢/燃气参数 (CSkuDetail)</h3>
-            </div>
-            <div>
-              <%= sf.label :unit_dimensions, "外形尺寸", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :unit_dimensions, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :product_dimensions, "产品尺寸 (Sinks)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :product_dimensions, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :sink_bowl_dimensions, "水槽尺寸", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :sink_bowl_dimensions, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :sink_depth, "水槽深度", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :sink_depth, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :leg_bracing, "支脚加固", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :leg_bracing, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :faucet_and_drain, "龙头/落水 (Hand Sinks)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :faucet_and_drain, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :gas_type, "燃气类型 (If applicable)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :gas_type, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div>
-              <%= sf.label :total_btu, "总热负荷 (If applicable)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.text_field :total_btu, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-            <div class="md:col-span-2">
-              <%= sf.label :standard_features, "标准特性 (英文)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.rich_text_area :standard_features, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-4" %>
-            </div>
-            <div class="md:col-span-2">
-              <%= sf.label :standard_features_zh, "标准特性 (中文)", class: "block text-sm font-medium text-slate-700 mb-2" %>
-              <%= sf.rich_text_area :standard_features_zh, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
-            </div>
-          </div>
-        <% else %>
-          <div class="mb-6 p-4 bg-yellow-50 border border-yellow-100 rounded-lg text-sm text-yellow-800">
-            该分类频道尚未定义详细参数字段。
-          </div>
-        <% end %>
-      <% end %>
-    <% elsif @sku.category&.leaf? %>
-      <div class="mb-6 p-4 bg-yellow-50 border border-yellow-100 rounded-lg text-sm text-yellow-800">
-        未加载详细参数，请确认分类设置。
+      <div>
+        <%= f.label :item_no, "Item No.", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :item_no, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
       </div>
-    <% else %>
-      <div class="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg text-sm text-blue-800">
-        请先选择有效的叶子分类以加载详细参数字段。
+
+      <div>
+        <%= f.label :product_name, "Product Name", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :product_name, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
       </div>
-    <% end %>
+
+      <div>
+        <%= f.label :material, "Material", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :material, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :specification, "Specification", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :specification, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :head_circumference, "Head Circumference", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :head_circumference, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :brim_length, "Brim Length", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :brim_length, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :closure_type, "Closure Type", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :closure_type, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :embroidery_print, "Embroidery/Print", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :embroidery_print, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :color, "Color", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :color, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :moq, "MOQ", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :moq, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :sample_time, "Sample Time", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :sample_time, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :production_lead_time, "Production Lead Time", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :production_lead_time, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :packing, "Packing", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :packing, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :carton_size, "Carton Size", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :carton_size, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= f.label :gross_weight, "Gross Weight", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.text_field :gross_weight, class: "w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+
+      <div class="md:col-span-2">
+        <%= f.label :standard_features, "Detailed Description (Standard Features)", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.rich_text_area :standard_features, class: "min-h-[200px] border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+    </div>
 
     <div class="flex space-x-4">
       <%= f.submit "保存 SKU", class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors" %>

@@ -2,25 +2,19 @@
   <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-4 md:px-8 py-4">
     <div class="flex items-center">
       <a href="<%= root_path %>" class="md:hidden flex items-center mr-2">
-        <%= image_tag "logo2.png", class: "h-6 w-auto object-contain", alt: "Sinower Logo" %>
+        <%= image_tag "hatlogo.png", class: "h-6 w-auto object-contain", alt: "Capwis" %>
       </a>
       <a href="<%= root_path %>" class="hidden md:flex items-center space-x-3 rtl:space-x-reverse mr-4 md:mr-12 flex-shrink-0">
-        <%= image_tag "logo2.png", class: "h-8 sm:h-10 md:h-12 lg:h-14 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[240px] object-contain transition-all duration-300", alt: "Sinower Logo" %>
+        <%= image_tag "hatlogo.png", class: "h-8 sm:h-10 md:h-12 lg:h-14 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[240px] object-contain transition-all duration-300", alt: "Capwis" %>
       </a>
     </div>
     <div class="flex md:order-2 space-x-3 items-center">
-      <!-- 中英切换 -->
-      <div class="hidden lg:flex items-center space-x-2 mr-4 border-r border-slate-200 pr-4">
-        <%= link_to "EN", url_for(locale: :en), class: "text-[10px] font-black tracking-tighter #{I18n.locale == :en ? 'text-blue-600' : 'text-slate-500 hover:text-blue-600'}" %>
-        <span class="text-slate-300">|</span>
-        <%= link_to "中文", url_for(locale: 'zh-CN'), class: "text-[10px] font-black tracking-tighter #{I18n.locale.to_s.start_with?('zh') ? 'text-blue-600' : 'text-slate-500 hover:text-blue-600'}" %>
-      </div>
 
       <div class="hidden md:flex">
         <% if user_signed_in? %>
           <div class="relative group/user">
-            <button type="button" class="flex items-center space-x-2 text-sm font-medium text-slate-700 hover:text-blue-600 transition-all bg-slate-50 p-1.5 rounded-full border border-slate-200 pr-3">
-              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-black shadow-lg shadow-blue-500/20">
+            <button type="button" class="flex items-center space-x-2 text-sm font-medium text-slate-700 hover:text-primary transition-all bg-slate-50 p-1.5 rounded-full border border-slate-200 pr-3">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-dark flex items-center justify-center text-white text-xs font-black shadow-lg shadow-primary/20">
                 <%= current_user.email[0..1].upcase %>
               </div>
               <svg class="w-4 h-4 text-slate-400 group-hover/user:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -50,7 +44,7 @@
           </div>
         <% else %>
           <div class="flex items-center space-x-1.5">
-            <%= link_to new_user_session_path, class: "group relative p-1.5 text-slate-600 hover:text-blue-600 bg-slate-50 rounded-full border border-slate-200 transition-all hover:shadow-md", title: t('navbar.login') do %>
+            <%= link_to new_user_session_path, class: "group relative p-1.5 text-slate-600 hover:text-slate-900 bg-slate-50 rounded-full border border-slate-200 transition-all hover:shadow-md", title: t('navbar.login') do %>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
               </svg>
@@ -73,17 +67,20 @@
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 flex-grow" id="navbar-sticky" data-navbar-target="menu">
       <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-slate-100 rounded-lg bg-white md:space-x-4 lg:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent justify-center text-xs lg:text-sm">
         <li>
-          <%= link_to t('navbar.home'), root_path, class: "block py-2 px-3 #{current_page?(root_path) ? 'text-blue-600 font-bold border-b-2 border-blue-600' : 'text-slate-600 hover:text-blue-600'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
+          <%= link_to t('navbar.home'), root_path, class: "block py-2 px-3 #{current_page?(root_path) ? 'text-primary font-bold border-b-2 border-primary' : 'text-slate-600 hover:text-primary'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
         </li>
         <li>
-          <%= link_to t('navbar.about_us'), about_path, class: "block py-2 px-3 #{current_page?(about_path) ? 'text-blue-600 font-bold border-b-2 border-blue-600' : 'text-slate-600 hover:text-blue-600'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
+          <%= link_to t('navbar.about_us'), about_path, class: "block py-2 px-3 #{current_page?(about_path) ? 'text-primary font-bold border-b-2 border-primary' : 'text-slate-600 hover:text-primary'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
+        </li>
+        <li>
+          <%= link_to t('navbar.factory'), factory_path, class: "block py-2 px-3 #{current_page?(factory_path) ? 'text-primary font-bold border-b-2 border-primary' : 'text-slate-600 hover:text-primary'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
         </li>
 
         <% [ 'a', 'b', 'c' ].each do |kind| %>
           <% categories_for_kind(kind).each do |category| %>
             <li class="relative group/cat-0" data-navbar-target="rootDropdown">
               <div class="flex items-center">
-                <%= link_to category.localized_name, category_path(category), class: "block py-2 px-3 #{params[:id].to_i == category.id ? 'text-blue-600 font-bold border-b-2 border-blue-600' : 'text-slate-600 hover:text-blue-600'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0 flex-grow" %>
+                <%= link_to category.localized_name, category_path(category), class: "block py-2 px-3 #{params[:id].to_i == category.id ? 'text-primary font-bold border-b-2 border-primary' : 'text-slate-600 hover:text-primary'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0 flex-grow" %>
                 <% if category.children.visible.any? %>
                   <button type="button" data-action="click->navbar#toggleMobileRoot" class="md:hidden ml-auto text-slate-400 p-2 focus:outline-none">
                     <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -106,16 +103,16 @@
         <% end %>
 
         <li>
-          <%= link_to t('navbar.warranty'), warranty_path, class: "block py-2 px-3 #{current_page?(warranty_path) ? 'text-blue-600 font-bold border-b-2 border-blue-600' : 'text-slate-600 hover:text-blue-600'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
+          <%= link_to "Blog", posts_path, class: "block py-2 px-3 #{current_page?(posts_path) ? 'text-primary font-bold border-b-2 border-primary' : 'text-slate-600 hover:text-primary'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
         </li>
         <li>
-          <%= link_to t('navbar.contact_us'), contact_path, class: "block py-2 px-3 #{current_page?(contact_path) ? 'text-blue-600 font-bold border-b-2 border-blue-600' : 'text-slate-600 hover:text-blue-600'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
+          <%= link_to t('navbar.contact_us'), contact_path, class: "block py-2 px-3 #{current_page?(contact_path) ? 'text-primary font-bold border-b-2 border-primary' : 'text-slate-600 hover:text-primary'} transition-all duration-300 rounded-sm md:bg-transparent md:p-0" %>
         </li>
         <li class="md:hidden pt-4 border-t border-slate-100 mt-2">
           <% if user_signed_in? %>
             <div class="flex flex-col space-y-3 px-3">
               <div class="flex items-center space-x-3 mb-2">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-black shadow-lg">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center text-white text-xs font-black shadow-lg">
                   <%= current_user.email[0..1].upcase %>
                 </div>
                 <div>
@@ -125,23 +122,13 @@
               </div>
               
               <div class="flex items-center space-x-4 pt-2">
-                <div class="flex items-center space-x-2">
-                  <%= link_to "EN", url_for(locale: :en), class: "text-[10px] font-black tracking-tighter #{I18n.locale == :en ? 'text-blue-600' : 'text-slate-500'}" %>
-                  <span class="text-slate-200">|</span>
-                  <%= link_to "中文", url_for(locale: 'zh-CN'), class: "text-[10px] font-black tracking-tighter #{I18n.locale.to_s.start_with?('zh') ? 'text-blue-600' : 'text-slate-500'}" %>
-                </div>
                 <%= button_to t('navbar.logout'), destroy_user_session_path, method: :delete, class: "text-red-600 font-bold text-sm" %>
               </div>
             </div>
           <% else %>
             <div class="flex flex-col space-y-4 px-3">
-            <div class="flex items-center space-x-2">
-                <%= link_to "EN", url_for(locale: :en), class: "text-[10px] font-black tracking-tighter #{I18n.locale == :en ? 'text-blue-600' : 'text-slate-500'}" %>
-                <span class="text-slate-200">|</span>
-                <%= link_to "中文", url_for(locale: 'zh-CN'), class: "text-[10px] font-black tracking-tighter #{I18n.locale.to_s.start_with?('zh') ? 'text-blue-600' : 'text-slate-500'}" %>
-              </div>
               <div class="flex flex-col space-y-1.5">
-                <%= link_to t('navbar.login'), new_user_session_path, class: "text-slate-600 hover:text-blue-600 py-1.5 text-xs font-medium border-b border-slate-100" %>
+                <%= link_to t('navbar.login'), new_user_session_path, class: "text-slate-600 hover:text-slate-900 py-1.5 text-xs font-medium border-b border-slate-100" %>
               </div>
             </div>
           <% end %>

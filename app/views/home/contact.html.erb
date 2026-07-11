@@ -1,29 +1,180 @@
-<div class="relative bg-slate-900 py-24 overflow-hidden">
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px]"></div>
-    <div class="absolute top-[20%] -right-[10%] w-[30%] h-[50%] bg-purple-600/10 rounded-full blur-[100px]"></div>
-  </div>
+<style>
+    @keyframes fall {
+        0% { transform: translateY(-80px) rotate(var(--rs)); opacity:0; }
+        8% { opacity: var(--op); }
+        90% { opacity: calc(var(--op) * 0.7); }
+        100% { transform: translateY(110vh) rotate(var(--re)); opacity:0; }
+    }
+    @keyframes gradientShift {
+        0%,100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    @keyframes ping {
+        75%,100% { transform:scale(2.2);opacity:0; }
+    }
+    @keyframes fadeUp {
+        from { opacity:0; transform:translateY(16px); }
+        to { opacity:1; transform:translateY(0); }
+    }
 
-    <div class="relative max-w-screen-xl mx-auto px-6 text-center">
-    <div class="inline-flex items-center px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs font-bold tracking-widest uppercase mb-8 backdrop-blur-sm">
-      <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-      <%= t('home.contact.subtitle') %>
+    .hw {
+        position: relative;
+        overflow: hidden;
+        padding: 3rem 2rem 2.8rem;
+        text-align: center;
+        background: linear-gradient(160deg, #fff8f2 0%, #fdf4ff 40%, #f0f9ff 100%);
+    }
+    .blob { position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0; }
+    .b1{width:360px;height:360px;top:-120px;left:-80px;background:rgba(249,115,22,0.13);}
+    .b2{width:320px;height:320px;top:-80px;right:-60px;background:rgba(59,130,246,0.12);}
+    .b3{width:300px;height:300px;bottom:-100px;left:30%;background:rgba(236,72,153,0.11);}
+    .b4{width:220px;height:220px;bottom:0;right:5%;background:rgba(16,185,129,0.12);}
+
+    .caps-layer { position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1; }
+    .cap { position:absolute;top:-80px;line-height:1; }
+
+    .content { position:relative;z-index:3;max-width:560px;margin:0 auto; }
+
+    .badge {
+        display:inline-flex;align-items:center;gap:9px;
+        padding:7px 18px;
+        background:rgba(255,255,255,0.75);
+        backdrop-filter:blur(10px);
+        border:0.5px solid rgba(249,115,22,0.25);
+        border-radius:999px;
+        margin-bottom:1.2rem;
+        box-shadow:0 2px 20px rgba(249,115,22,0.1);
+        animation: fadeUp 0.6s ease both;
+    }
+    .dot-wrap{position:relative;width:9px;height:9px;flex-shrink:0;}
+    .dot-ping{position:absolute;inset:0;border-radius:50%;background:#10b981;animation:ping 1.6s cubic-bezier(0,0,0.2,1) infinite;}
+    .dot-core{position:relative;width:9px;height:9px;border-radius:50%;background:#10b981;}
+    .badge-txt{font-size:10.5px;letter-spacing:0.22em;font-weight:700;text-transform:uppercase;color:#9a6c2a;}
+
+    .title {
+        margin:0 0 0.6rem;
+        animation: fadeUp 0.6s 0.15s ease both;
+    }
+    .t1 {
+        display:block;
+        font-size: clamp(1.6rem, 5vw, 2.8rem);
+        font-weight:900;
+        letter-spacing:-0.03em;
+        line-height:1.1;
+        background: linear-gradient(100deg, #f97316 0%, #ec4899 35%, #3b82f6 65%, #10b981 100%);
+        background-size: 250% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: fadeUp 0.6s 0.15s ease both, gradientShift 6s ease infinite;
+    }
+    .t2 {
+        display:block;
+        font-size: clamp(1.6rem, 5vw, 2.8rem);
+        font-weight:900;
+        letter-spacing:-0.03em;
+        line-height:1.1;
+        color:#1a1009;
+        animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .rule {
+        display:flex;align-items:center;justify-content:center;gap:10px;
+        margin:1rem 0;
+        animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .rl {
+        flex:1;max-width:80px;height:1.5px;border-radius:999px;
+        background:linear-gradient(90deg,transparent,#f97316);
+    }
+    .rr {
+        flex:1;max-width:80px;height:1.5px;border-radius:999px;
+        background:linear-gradient(90deg,#3b82f6,transparent);
+    }
+    .rdot {
+        width:6px;height:6px;border-radius:50%;
+        background:linear-gradient(135deg,#f97316,#ec4899);
+    }
+
+    .desc {
+        font-size:0.92rem;
+        line-height:1.9;
+        color:#7c6a5a;
+        margin:0;
+        animation: fadeUp 0.6s 0.35s ease both;
+    }
+    .desc em {
+        font-style:normal;
+        font-weight:700;
+        background:linear-gradient(90deg,#f97316,#ec4899);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        background-clip:text;
+    }
+    .sep { margin:0 6px;color:#d4b89a; }
+</style>
+
+<div class="hw">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+  <div class="caps-layer" id="caps"></div>
+
+  <div class="content">
+    <div class="badge">
+      <div class="dot-wrap"><span class="dot-ping"></span><span class="dot-core"></span></div>
+      <span class="badge-txt">Usually Replies Within 4 Hour</span>
     </div>
-    <h1 class="text-5xl md:text-6xl font-black text-white tracking-tight mb-8">
-      <%= t('home.contact.hero_title').html_safe %>
+
+    <h1 class="title">
+      <span class="t1">Let's Talk</span>
+      <span class="t2">About Your Project</span>
     </h1>
-    <p class="max-w-2xl mx-auto text-slate-400 text-lg font-medium">
-      <%= t('home.contact.hero_desc') %>
-    </p>
+
+    <div class="rule">
+      <div class="rl"></div>
+      <div class="rdot"></div>
+      <div class="rr"></div>
+    </div>
+
+    <p class="desc">
+      <em>Custom Cap Manufacturing</em>
+      <span class="sep">·</span>
+      OEM &amp; ODM Projects
+
+
+      <span class="sep">·</span>
+All kinds of caps    </p>
   </div>
 </div>
+
+<script>
+    const CAPS = ["🧢","👒","🤝","🎓","🧢","👒","🎩","🧢","👒","🧢"];
+    const layer = document.getElementById('caps');
+    for(let i=0;i<40;i++){
+        const el = document.createElement('div');
+        el.className = 'cap';
+        el.textContent = CAPS[i % CAPS.length];
+        const x = (Math.random()*98).toFixed(1);
+        const dur = (7 + Math.random()*11).toFixed(2);
+        const delay = -(Math.random()*parseFloat(dur));
+        const size = (1.0 + Math.random()*1.6).toFixed(2);
+        const op = (0.3 + Math.random()*0.45).toFixed(2);
+        const rs = (Math.random()*30-15).toFixed(0)+'deg';
+        const re = (180+Math.random()*360).toFixed(0)+'deg';
+        el.style.cssText=`--rs:${rs};--re:${re};--op:${op};left:${x}%;font-size:${size}rem;opacity:0;animation:fall ${dur}s ${delay}s linear infinite;`;
+        layer.appendChild(el);
+    }
+</script>
+
 
 <div class="bg-white py-24">
   <div class="max-w-screen-xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
     <!-- Contact Form -->
-    <div class="bg-slate-50 p-8 md:p-12 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-blue-500/5">
+    <div class="bg-slate-50 p-8 md:p-12 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-primary/5">
       <h2 class="text-2xl font-black text-slate-900 mb-8"><%= t('home.contact.send_message') %></h2>
-      
+
       <%= form_with(model: @contact_message, url: contact_path, local: true, class: "space-y-6", x_data: "{ agreed: false }", "@submit.prevent": "if(agreed) $el.submit(); else alert('#{t('home.contact.form.privacy_error')}')") do |f| %>
         <% if @contact_message.errors.any? %>
           <div class="p-4 bg-red-50 border border-red-100 rounded-xl text-red-800 text-sm">
@@ -38,39 +189,39 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <%= f.label :name, t('home.contact.form.name'), class: "block text-xs font-black text-slate-500 uppercase tracking-widest mb-2" %>
-            <%= f.text_field :name, required: true, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.name_placeholder') %>
+            <%= f.text_field :name, required: true, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.name_placeholder') %>
           </div>
           <div>
             <%= f.label :email, t('home.contact.form.email'), class: "block text-xs font-black text-slate-500 uppercase tracking-widest mb-2" %>
-            <%= f.email_field :email, required: true, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.email_placeholder') %>
+            <%= f.email_field :email, required: true, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.email_placeholder') %>
           </div>
         </div>
 
         <div>
           <%= f.label :subject, t('home.contact.form.subject'), class: "block text-xs font-black text-slate-500 uppercase tracking-widest mb-2" %>
-          <%= f.text_field :subject, required: true, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.subject_placeholder') %>
+          <%= f.text_field :subject, required: true, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.subject_placeholder') %>
         </div>
 
         <div>
           <%= f.label :message, t('home.contact.form.message'), class: "block text-xs font-black text-slate-500 uppercase tracking-widest mb-2" %>
-          <%= f.text_area :message, required: true, rows: 6, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.message_placeholder') %>
+          <%= f.text_area :message, required: true, rows: 6, class: "w-full px-5 py-4 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all font-medium text-slate-900 placeholder-slate-300", placeholder: t('home.contact.form.message_placeholder') %>
         </div>
 
         <div class="flex items-start space-x-3 pt-2">
           <div class="flex items-center h-5">
-            <%= check_box_tag :privacy_agreement, "1", false, x_model: "agreed", class: "w-5 h-5 text-blue-600 border-slate-300 rounded focus:ring-blue-500 cursor-pointer" %>
+            <%= check_box_tag :privacy_agreement, "1", false, x_model: "agreed", class: "w-5 h-5 text-primary border-slate-300 rounded focus:ring-primary cursor-pointer" %>
           </div>
           <div class="text-sm">
             <label for="privacy_agreement" class="font-medium text-slate-600">
               <%= t('home.contact.form.privacy_policy_agree') %>
-              <button type="button" @click="$dispatch('open-privacy')" class="text-blue-600 hover:text-blue-700 font-bold underline underline-offset-4">
+              <a href="<%= privacy_path %>" target="_blank" class="text-primary hover:text-primary/80 font-bold underline underline-offset-4">
                 <%= t('home.contact.form.privacy_policy_link') %>
-              </button>
+              </a>
             </label>
           </div>
         </div>
 
-        <%= f.submit t('home.contact.form.submit'), class: "w-full py-5 bg-blue-600 hover:bg-blue-700 text-white rounded-[1.5rem] font-black text-sm tracking-widest uppercase transition-all shadow-xl shadow-blue-500/30 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed", ":disabled": "!agreed" %>
+        <%= f.submit t('home.contact.form.submit'), class: "w-full py-5 bg-primary hover:bg-primary/90 text-white rounded-[1.5rem] font-black text-sm tracking-widest uppercase transition-all shadow-xl shadow-primary/30 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed", ":disabled": "!agreed" %>
       <% end %>
     </div>
 
@@ -85,33 +236,35 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
-            <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
+            <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
             </div>
-            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2"><%= t('home.contact.phone_title') %></h3>
-            <p class="text-xl font-black text-slate-900 tracking-tight"><%= t('contact_info.phone') %></p>
-          </div>
+            <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-2"><%= t('home.contact.phone_title') %></h3>
+            <p class="text-xl font-black text-slate-900 tracking-tight">
+              <%= link_to t('contact_info.phone'), "tel:#{t('contact_info.phone')}" %>
+            </p>          </div>
 
           <div class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
-            <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
+            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-secondary/20">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             </div>
-            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2"><%= t('home.contact.email_title') %></h3>
-            <p class="text-base font-black text-slate-900 tracking-tight mb-1"><%= t('contact_info.email') %></p>
-            <p class="text-sm font-bold text-blue-600"><%= t('contact_info.support_email') %></p>
+            <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-2"><%= t('home.contact.email_title') %></h3>
+            <p class="text-base font-black text-slate-900 tracking-tight mb-1">
+              <%= link_to t('contact_info.email'), "mailto:#{t('contact_info.support_email')}" %>
+            </p>
+
+            <p class="text-sm font-bold text-primary">
+              <%= link_to t('contact_info.support_email'), "mailto:#{t('contact_info.support_email')}" %>
+            </p>
           </div>
         </div>
 
-        <div class="p-8 bg-slate-900 rounded-[2.5rem] text-white relative overflow-hidden">
-          <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-600 rounded-full blur-3xl opacity-20"></div>
+        <div class="p-8 bg-dark rounded-[2.5rem] text-white relative overflow-hidden">
+          <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-primary rounded-full blur-3xl opacity-20"></div>
           <h3 class="text-xl font-black mb-4 relative z-10"><%= t('home.contact.support_card_title') %></h3>
-          <p class="text-slate-400 text-sm mb-6 relative z-10 leading-relaxed">
-            <%= t('home.contact.support_card_desc') %>
+          <p class="text-slate-500 text-sm mb-6 relative z-10 leading-relaxed">
+            Professional support and consulting services for your brand development.
           </p>
-          <%= link_to warranty_path, class: "inline-flex items-center text-blue-400 font-black text-xs tracking-widest uppercase hover:text-blue-300 transition-colors relative z-10" do %>
-            <%= t('home.contact.view_warranty') %>
-            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-          <% end %>
         </div>
       </div>
     </div>

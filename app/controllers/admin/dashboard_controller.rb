@@ -4,7 +4,6 @@ class Admin::DashboardController < Admin::BaseController
     @total_skus = Sku.count
     @active_skus = Sku.where(status: 'active').count
     @messages_count = ContactMessage.count
-    @warranty_inquiries_count = WarrantyInquiry.count
     @today_visits = VisitRecord.where("visit_time >= ?", Time.current.beginning_of_day).count
     @total_visits = VisitRecord.count
     

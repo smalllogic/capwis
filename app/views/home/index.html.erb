@@ -1,95 +1,380 @@
-<!-- Hero Section with Tech Dark Theme -->
-<div class="relative bg-slate-900 overflow-hidden">
-  <!-- Decorative background elements -->
-  <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-    <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px]"></div>
-    <div class="absolute top-[20%] -right-[10%] w-[30%] h-[50%] bg-purple-600/10 rounded-full blur-[100px]"></div>
+<% content_for :title, "Capwis - Custom Hat Manufacturer | Baseball Caps, Trucker Hats & More" %>
+<% content_for :meta_description, "Capwis is a professional custom hat manufacturer in Qingdao, China with 25+ years of experience. OEM & ODM baseball caps, trucker hats, bucket hats, beanies and more. Factory-direct pricing." %>
+<% content_for :meta_keywords, "custom hat manufacturer, baseball cap OEM, trucker hat manufacturer, bucket hat, beanie cap, Qingdao hat factory, Capwis, hat ODM China" %>
+
+<!-- Hero Section with Slideshow Background -->
+<div class="relative min-h-[80vh] flex items-center overflow-hidden" data-controller="slideshow">
+  <!-- Slideshow Background Container -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-slate-50 opacity-90 z-10"></div>
+    
+    <!-- Slides -->
+    <div class="relative w-full h-full">
+      <div class="slideshow-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0" data-slideshow-target="slide">
+        <%= image_tag "banner1.jpg", class: "w-full h-full object-cover" %>
+      </div>
+      <div class="slideshow-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0" data-slideshow-target="slide">
+        <%= image_tag "banner2.jpg", class: "w-full h-full object-cover" %>
+      </div>
+      <div class="slideshow-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0" data-slideshow-target="slide">
+        <%= image_tag "banner3.jpg", class: "w-full h-full object-cover" %>
+      </div>
+    </div>
+
+    <!-- Decorative background elements (now on top of slides but below content) -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-20">
+      <div class="absolute inset-0 bg-white/10"></div>
+      <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]"></div>
+      <div class="absolute top-[20%] -right-[10%] w-[30%] h-[50%] bg-secondary/10 rounded-full blur-[100px]"></div>
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64 bg-gradient-to-t from-white to-transparent"></div>
+    </div>
   </div>
 
-    <div class="relative max-w-screen-xl mx-auto px-6 py-24 lg:py-32 flex flex-col items-center text-center">
-    <div class="inline-flex items-center px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs font-bold tracking-widest uppercase mb-8 backdrop-blur-sm animate-pulse">
-      <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-      <%= t('home.index.global_expertise') %>
-    </div>
-    
-    <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight mb-8 leading-[1.1]">
-      <%= t('home.index.hero_title_1') %><br/>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300"><%= t('home.index.hero_title_2') %></span>
-    </h1>
-    
-    <p class="max-w-2xl text-slate-400 text-lg md:text-xl font-medium mb-12 leading-relaxed">
-      <%= t('home.index.hero_desc') %>
-    </p>
-    
-    <div class="flex flex-col sm:flex-row gap-4">
-      <%= link_to all_products_path, class: "px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-black text-sm tracking-widest uppercase transition-all shadow-2xl shadow-blue-600/20 group flex items-center" do %>
-        <%= t('home.index.explore_products') %>
-        <svg class="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-      <% end %>
-      <%= link_to contact_path, class: "px-10 py-4 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 rounded-2xl font-black text-sm tracking-widest uppercase transition-all" do %>
-        <%= t('home.index.contact_us') %>
+  <div class="relative z-30 max-w-screen-xl mx-auto  px-6 py-24 lg:py-32 flex flex-col lg:flex-row items-center justify-between text-center lg:text-left w-full">    <div class="flex-1 z-10 flex flex-col items-center lg:items-start relative min-h-[580px] md:min-h-[640px]">
+      <% [1, 3, 2].each do |i| %>
+        <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center lg:items-start transition-all duration-1000 transform opacity-0 translate-y-8 pointer-events-none p-8 md:p-14 lg:p-16 bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.1)]" data-slideshow-target="content">
+          <div class="flex-grow flex flex-col justify-center items-center lg:items-start w-full">
+            <div class="inline-flex items-center px-4 py-2 bg-white/50 backdrop-blur-sm border border-white/40 rounded-full text-primary text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+            <span class="relative flex h-2 w-2 mr-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            <%= t("home.index.hero_slides.slide#{i}.title1") %>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight mb-8 leading-[1.15] w-full">
+            <span class="block text-slate-900 mb-2"><%= t("home.index.hero_slides.slide#{i}.title1") %></span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent animate-gradient-x"><%= t("home.index.hero_slides.slide#{i}.title2") %></span>
+          </h1>
+          
+          <p class="max-w-2xl text-slate-600 text-lg md:text-xl font-medium mb-12 leading-relaxed w-full">
+            <%= t("home.index.hero_slides.slide#{i}.desc") %>
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 mt-auto mb-12 w-full justify-center lg:justify-start">
+            <%= link_to all_products_path, class: "px-10 py-4 bg-primary hover:bg-primary/90 text-white rounded-2xl font-black text-sm tracking-widest uppercase transition-all shadow-xl shadow-primary/20 group flex items-center justify-center" do %>
+              <%= t('home.index.explore_products') %>
+              <svg class="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            <% end %>
+            <%= link_to contact_path, class: "px-10 py-4 bg-white/50 backdrop-blur-sm hover:bg-white/70 text-slate-900 border border-white/40 rounded-2xl font-black text-sm tracking-widest uppercase transition-all shadow-sm" do %>
+              <%= t('home.index.contact_us') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
       <% end %>
     </div>
 
-    <!-- Stats Preview -->
-    <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
-      <div>
-        <div class="text-sm font-black text-white mb-1"><%= t('home.index.stats.customers') %></div>
+    <!-- Animated Multiple Hats Component -->
+    <div class="flex-1 relative w-full max-w-lg lg:max-w-xl aspect-square flex items-center justify-center">
+      <!-- Background Shapes -->
+
+
+      <!-- Animated Hats Container -->
+
+
+      <!-- Hat 2: Cotton Hat / Beanie -->
+
+
+      <!-- Hat 3: Sun Hat -->
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CAP PRODUCT MARQUEE ===== -->
+<div class="bg-slate-900 py-8 overflow-hidden">
+  <div class="text-center mb-6">
+    <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Our Products</span>
+  </div>
+  <!-- Forward strip -->
+  <div class="overflow-hidden mb-4">
+    <div class="flex gap-5 w-max" style="animation: cap-marquee 32s linear infinite;">
+      <% 2.times do %>
+        <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.jpg","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"]].each do |img, label| %>
+          <div class="relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer">
+            <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <span class="text-white font-bold text-sm tracking-wide"><%= label %></span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <!-- Reverse strip -->
+  <div class="overflow-hidden">
+    <div class="flex gap-5 w-max" style="animation: cap-marquee-rev 38s linear infinite;">
+      <% 2.times do %>
+        <% [["cap5.webp","Visor Hat"],["cap4.webp","Sports Cap"],["cap3.jpg","Sun Hat"],["cap2.webp","Mesh Cap"],["cap1.webp","Custom Cap"]].each do |img, label| %>
+          <div class="relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer">
+            <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+            <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+              <span class="text-white font-bold text-xs tracking-wide"><%= label %></span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FEATURED PRODUCTS GRID ===== -->
+<div class="bg-white py-20 overflow-hidden">
+  <div class="max-w-screen-xl mx-auto px-6">
+    <div class="text-center mb-14 reveal-up">
+      <p class="text-primary font-semibold tracking-widest uppercase text-xs mb-3">Crafted with Precision</p>
+      <h2 class="text-4xl md:text-5xl font-black text-slate-900">Featured Products</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+      <% [
+        { img: "product_baseball_cap.png",    name: "Baseball Cap",           tag: "Best Seller", color: "primary",   fit: "cover" },
+        { img: "product_bucket_cap.png",      name: "Bucket Cap",             tag: "Trending",    color: "secondary", fit: "contain" },
+        { img: "product_flat_bill_cap.png",   name: "Flat Bill Cap",          tag: "Custom",      color: "accent",    fit: "contain" },
+        { img: "product_kids_cap.png",        name: "Kids Cap",               tag: "Cute",        color: "primary",   fit: "cover" },
+        { img: "product_knit_beanie_cap.png", name: "Knit Beanie Cap",        tag: "Winter",      color: "secondary", fit: "cover" },
+        { img: "product_quick_dry_cap.png",   name: "Quick Dry Baseball Cap", tag: "Sport",       color: "accent",    fit: "cover" },
+        { img: "product_trucker_cap.png",     name: "Trucker Cap",            tag: "OEM Ready",   color: "primary",   fit: "cover" },
+        { img: "product_visor_cap.png",       name: "Visor Cap",              tag: "Summer",      color: "secondary", fit: "cover" },
+        { img: "product_winter_hats.png",     name: "Winter Hats",            tag: "Popular",     color: "accent",    fit: "cover" }
+      ].each_with_index do |cap, i| %>
+        <div class="reveal-product group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" style="transition-delay: <%= i * 80 %>ms">
+          <div class="aspect-[3/4] overflow-hidden bg-white">
+            <%= image_tag cap[:img], class: "w-full h-full #{cap[:fit] == 'contain' ? 'object-contain p-4' : 'object-cover'} group-hover:scale-105 transition-transform duration-700" %>
+          </div>
+          <div class="absolute top-3 left-3">
+            <span class="bg-<%= cap[:color] %> text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"><%= cap[:tag] %></span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-5 pb-6 pt-16">
+            <p class="text-white font-black text-xl leading-tight drop-shadow-lg"><%= cap[:name] %></p>
+            <p class="text-white/75 text-xs font-bold mt-1 uppercase tracking-widest">Custom · OEM · ODM</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Who We Are & Categories Section -->
+<div class="bg-white py-24 relative overflow-hidden">
+  <div class="max-w-screen-xl mx-auto px-6 relative z-10">
+    <div class="flex flex-col lg:flex-row gap-16 items-start mb-24">
+      <div class="lg:w-1/2 reveal-left">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
+          <%= t('home.index.who_we_are_title') %>
+        </h2>
+        <p class="text-slate-500 text-lg leading-relaxed mb-8">
+          <%= t('home.index.who_we_are_desc') %>
+        </p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm">
+            <div class="text-3xl font-black text-primary mb-1">20</div>
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-widest"><%= t('home.index.years_history') %></div>
+          </div>
+          <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm">
+            <div class="text-3xl font-black text-secondary mb-1">100%</div>
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-widest"><%= t('home.index.oem_odm_capability') %></div>
+          </div>
+        </div>
       </div>
-      <div>
-        <div class="text-sm font-black text-white mb-1"><%= t('home.index.stats.patents') %></div>
-      </div>
-      <div>
-        <div class="text-sm font-black text-white mb-1"><%= t('home.index.stats.support') %></div>
-      </div>
-      <div>
-        <div class="text-sm font-black text-white mb-1"><%= t('home.index.stats.efficiency') %></div>
+      
+      <div class="lg:w-1/2 grid grid-cols-1 gap-6 reveal-right">
+        <h3 class="text-2xl font-black text-slate-900 mb-2"><%= t('home.index.core_products_title') %></h3>
+        <% ['a', 'b', 'c'].each do |kind| %>
+          <% 
+            name = case kind
+                   when 'a' then t('navbar.cooling')
+                   when 'b' then t('navbar.cooking')
+                   when 'c' then t('navbar.stainless')
+                   end
+            desc = case kind
+                   when 'a' then t('home.index.strengths.no_moq.desc')
+                   when 'b' then t('home.index.strengths.flexible.desc')
+                   when 'c' then t('home.index.strengths.direct_factory.desc')
+                   end
+            color = case kind
+                    when 'a' then 'primary'
+                    when 'b' then 'secondary'
+                    when 'c' then 'accent'
+                    end
+          %>
+          <%= link_to channel_path(kind), class: "group p-6 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all duration-300 flex items-center justify-between" do %>
+            <div class="flex items-center space-x-6">
+              <div class="w-16 h-16 bg-<%= color %>/10 rounded-2xl flex items-center justify-center text-<%= color %> group-hover:scale-110 transition-transform">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black text-slate-900 uppercase"><%= name %></h4>
+                <p class="text-sm text-slate-500 font-medium"><%= desc %></p>
+              </div>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:bg-<%= color %> group-hover:text-white transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Features Section -->
+<!-- Customization Process Section -->
+<div class="bg-slate-50 py-24">
+  <div class="max-w-screen-xl mx-auto px-6 text-center">
+    <div class="mb-20 reveal-up">
+      <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4"><%= t('home.index.process_title') %></h2>
+      <div class="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
+      <!-- Decorative Line -->
+      <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-slate-200 z-0"></div>
+      
+      <% 4.times do |i| %>
+        <div class="relative z-10 group reveal-up" style="transition-delay: <%= i * 100 %>ms">
+          <div class="w-24 h-24 bg-white rounded-full border-4 border-slate-50 shadow-xl mx-auto flex items-center justify-center mb-8 group-hover:border-primary transition-colors duration-500">
+            <span class="text-4xl font-black text-primary"><%= i + 1 %></span>
+          </div>
+          <h4 class="text-xl font-black text-slate-900 mb-4 uppercase"><%= t("home.index.process.step_#{i+1}_title") %></h4>
+          <p class="text-slate-500 font-medium px-4">
+            <%= t("home.index.process.step_#{i+1}_desc") %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Manufacturing Excellence Section (Strength) -->
+<div class="bg-white py-24 relative overflow-hidden">
+  <div class="max-w-screen-xl mx-auto px-6 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="relative order-2 lg:order-1 reveal-left">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-4 pt-12">
+            <div class="aspect-square rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
+              <%= image_tag "factory1.jpg", class: "w-full h-full object-cover" %>
+            </div>
+            <div class="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
+              <%= image_tag "factory2.jpg", class: "w-full h-full object-cover" %>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
+              <%= image_tag "factory3.jpg", class: "w-full h-full object-cover" %>
+            </div>
+            <div class="aspect-square rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
+              <%= image_tag "factory4.jpg", class: "w-full h-full object-cover" %>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-8 -right-8 bg-primary p-8 rounded-[2rem] shadow-2xl text-white animate-bounce hidden md:block">
+          <div class="text-4xl font-black mb-1">20</div>
+          <div class="text-xs font-bold uppercase tracking-widest">Years Exp.</div>
+        </div>
+      </div>
+      
+      <div class="order-1 lg:order-2 reveal-right">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
+          <%= t('home.index.strength_title') %>
+        </h2>
+        
+        <div class="space-y-8">
+          <% ['no_moq', 'flexible', 'easy_process', 'direct_factory'].each_with_index do |key, idx| %>
+            <% color = ['primary', 'secondary', 'accent', 'primary'][idx] %>
+            <div class="flex items-start space-x-6 group">
+              <div class="w-14 h-14 bg-<%= color %>/10 rounded-2xl flex-shrink-0 flex items-center justify-center text-<%= color %> group-hover:bg-<%= color %> group-hover:text-white transition-all duration-300">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-black text-slate-900 mb-2 uppercase tracking-tight"><%= t("home.index.strengths.#{key}.title") %></h4>
+                <p class="text-slate-500 font-medium leading-relaxed">
+                  <%= t("home.index.strengths.#{key}.desc") %>
+                </p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Final CTA Section -->
 <div class="bg-white py-24">
   <div class="max-w-screen-xl mx-auto px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4"><%= t('home.index.core_tech') %></h2>
-      <div class="h-1.5 w-20 bg-blue-600 mx-auto rounded-full"></div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Feature 1 -->
-      <div class="group p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500">
-        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-blue-600/20 group-hover:-translate-y-2 transition-transform duration-500">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H5a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-        </div>
-        <h3 class="text-xl font-black text-slate-900 mb-4 tracking-tight"><%= t('home.index.features.factory_direct.title') %></h3>
-        <p class="text-slate-500 font-medium leading-relaxed">
-          <%= t('home.index.features.factory_direct.desc') %>
+    <div class="relative bg-gradient-to-br from-primary via-primary/90 to-secondary p-12 md:p-20 rounded-[3rem] overflow-hidden shadow-3xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12">
+      <div class="relative z-10 max-w-2xl">
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+          <%= t('home.index.final_cta_title') %>
+        </h2>
+        <p class="text-white/80 text-xl font-medium">
+          <%= t('home.index.final_cta_desc') %>
         </p>
       </div>
-
-      <!-- Feature 2 -->
-      <div class="group p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500">
-        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-blue-600/20 group-hover:-translate-y-2 transition-transform duration-500">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01m-.01 4h.01"></path></svg>
-        </div>
-        <h3 class="text-xl font-black text-slate-900 mb-4 tracking-tight"><%= t('home.index.features.inventory.title') %></h3>
-        <p class="text-slate-500 font-medium leading-relaxed">
-          <%= t('home.index.features.inventory.desc') %>
-        </p>
+      
+      <div class="relative z-10 flex-shrink-0">
+        <%= link_to contact_path, class: "px-12 py-6 bg-white hover:bg-slate-50 text-slate-900 rounded-2xl font-black text-lg tracking-widest uppercase transition-all shadow-2xl flex items-center group" do %>
+          <%= t('home.index.get_free_quote') %>
+          <svg class="w-6 h-6 ml-4 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        <% end %>
       </div>
-
-      <!-- Feature 3 -->
-      <div class="group p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500">
-        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-blue-600/20 group-hover:-translate-y-2 transition-transform duration-500">
-          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-        </div>
-        <h3 class="text-xl font-black text-slate-900 mb-4 tracking-tight"><%= t('home.index.features.support.title') %></h3>
-        <p class="text-slate-500 font-medium leading-relaxed">
-          <%= t('home.index.features.support.desc') %>
-        </p>
-      </div>
+      
+      <!-- Decorative circles -->
+      <div class="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
     </div>
   </div>
 </div>
+
+<style>
+  @keyframes cap-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes cap-marquee-rev {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+
+  .reveal-up, .reveal-left, .reveal-right, .reveal-product {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal-left  { transform: translateX(-36px); }
+  .reveal-right { transform: translateX(36px); }
+
+  .is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+</style>
+
+<script>
+  function initHomeAnimations() {
+    const els = document.querySelectorAll(".reveal-up, .reveal-left, .reveal-right, .reveal-product");
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("is-visible");
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    els.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add("is-visible");
+      } else {
+        obs.observe(el);
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initHomeAnimations);
+  document.addEventListener("turbo:load", initHomeAnimations);
+</script>
