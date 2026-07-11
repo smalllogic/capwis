@@ -12,12 +12,11 @@
 
 puts "Seeding users..."
 User.destroy_all
+
 admin = User.create!(
-  email: '123456@qq.com',
-  password: '123456',
-  password_confirmation: '123456',
+  email: ENV['ADMIN_EMAIL'] || 'admin@example.com',
+  password: ENV['ADMIN_PASSWORD'] || SecureRandom.random_bytes(24),
+  password_confirmation: ENV['ADMIN_PASSWORD'] || SecureRandom.random_bytes(24),
   admin: true
 )
 puts "✓ Created admin user: #{admin.email}"
-
-
