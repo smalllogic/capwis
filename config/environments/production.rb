@@ -73,7 +73,7 @@ Rails.application.configure do
   config.cache_store = :solid_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :solid_queue
+  config.active_job.queue_adapter = :inline
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -83,11 +83,10 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "lincaps.com") }
   Rails.application.routes.default_url_options = config.action_mailer.default_url_options
 
-  # Use Resend HTTP API for email delivery (more reliable than SMTP)
-  config.action_mailer.delivery_method = :resend
-  config.action_mailer.resend_settings = {
-    api_key: ENV["RESEND_API_KEY"]
-  }
+  # config.action_mailer.delivery_method = :resend
+  # config.action_mailer.resend_settings = {
+  #   api_key: ENV["RESEND_API_KEY"]
+  # }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

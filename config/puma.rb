@@ -24,8 +24,15 @@
 # Any libraries that use a connection pool or another resource pool should
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
-threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 2)
 threads threads_count, threads_count
+
+# Specifies the number of `workers` to boot in cluster mode.
+# On 512MB RAM, we should avoid multiple workers.
+workers ENV.fetch("WEB_CONCURRENCY", 0)
+
+# Preload the application before starting workers for memory efficiency (Copy-on-Write)
+preload_app! if ENV.fetch("WEB_CONCURRENCY", "0").to_i > 0
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch("PORT", 3000)
@@ -34,7 +41,7 @@ port ENV.fetch("PORT", 3000)
 plugin :tmp_restart
 
 # Run the Solid Queue supervisor inside of Puma for single-server deployments
-plugin :solid_queue if ENV.fetch("SOLID_QUEUE_IN_PUMA", "true") == "true"
+# plugin :solid_queue if ENV.fetch("SOLID_QUEUE_IN_PUMA", "true") == "true"
 
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
