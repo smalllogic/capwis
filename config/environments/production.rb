@@ -25,16 +25,27 @@ Rails.application.configure do
   config.active_storage.service = :cloudflare
   config.active_storage.track_variants = true
   
-  # Optimization: Direct access to public R2 objects via CDN
-  # Requires CLOUDFLARE_R2_PUBLIC_URL environment variable (e.g., https://pub-xxx.r2.dev or custom domain)
-  if ENV["CLOUDFLARE_R2_PUBLIC_URL"].present?
-    config.active_storage.resolve_model_to_route = :rails_storage_proxy
-  else
-    config.active_storage.resolve_model_to_route = :rails_storage_redirect
+  # Set host for Active Storage URL generation
+  config.after_initialize do
+    if ENV["CLOUDFLARE_R2_PUBLIC_URL"].present?
+      # Use custom R2 public domain for image URLs
+      public_uri = URI.parse(ENV["CLOUDFLARE_R2_PUBLIC_URL"])
+      ActiveStorage::Current.url_options = {
+        host: public_uri.host,
+        protocol: public_uri.scheme,
+        port: public_uri.port
+      }
+    else
+      # Default to app host
+      ActiveStorage::Current.url_options = {
+        host: ENV.fetch("APP_HOST", "lincaps.com"),
+        protocol: "https"
+      }
+    end
   end
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true

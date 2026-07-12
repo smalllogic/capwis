@@ -26,8 +26,8 @@ class Sku < ApplicationRecord
         errors.add(:images, "Must be image files (JPEG, PNG, GIF, WebP, BMP). '#{image.filename}' is #{image.content_type}")
       end
 
-      if image.byte_size > 30.megabytes
-        errors.add(:images, "File '#{image.filename}' is too large (max 30MB). Current size: #{(image.byte_size / 1.0.megabyte).round(2)}MB")
+      if image.byte_size > 10.megabytes
+        errors.add(:images, "File '#{image.filename}' is too large (max 10MB). Current size: #{(image.byte_size / 1.0.megabyte).round(2)}MB")
       end
     end
   end

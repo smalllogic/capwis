@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     return if path == "/up"
     
     # 确保 session 加载 (Rails 7/8 中 session 可能是惰性加载的)
-    session[:loaded] = true if session.id.nil?
+    # 不要在生产环境中因为 session.id.nil? 而主动写入，防止破坏登录 session
     session_id = session.id.to_s
     return if session_id.blank?
 
