@@ -21,8 +21,8 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # Store uploaded files on Google Cloud Storage (see config/storage.yml for options)
-  config.active_storage.service = :google
+  # Store uploaded files on Cloudflare R2 (see config/storage.yml for options)
+  config.active_storage.service = :cloudflare
   config.active_storage.track_variants = true
   config.active_storage.resolve_model_to_route = :rails_storage_redirect
 

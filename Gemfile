@@ -28,8 +28,8 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Google Cloud Storage for Active Storage (production)
-gem "google-cloud-storage", "~> 1.31", require: false
+# Cloudflare R2 (S3 compatible) for Active Storage (production)
+gem "aws-sdk-s3", require: false
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
