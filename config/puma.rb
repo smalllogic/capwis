@@ -24,15 +24,15 @@
 # Any libraries that use a connection pool or another resource pool should
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
-threads_count = ENV.fetch("RAILS_MAX_THREADS", 2)
+# 强制在 512MB RAM 环境下使用单进程模式 (Single Mode)
+workers 0
+
+# 限制线程数以节省内存，默认为 2
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 2).to_i
 threads threads_count, threads_count
 
-# Specifies the number of `workers` to boot in cluster mode.
-# On 512MB RAM, we should avoid multiple workers.
-workers ENV.fetch("WEB_CONCURRENCY", 0)
-
-# Preload the application before starting workers for memory efficiency (Copy-on-Write)
-preload_app! if ENV.fetch("WEB_CONCURRENCY", "0").to_i > 0
+# 仅在开启多进程时预加载应用，减少启动时的内存峰值
+# preload_app! if ENV.fetch("WEB_CONCURRENCY", "0").to_i > 0
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch("PORT", 3000)
