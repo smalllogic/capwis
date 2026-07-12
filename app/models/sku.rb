@@ -1,7 +1,9 @@
 class Sku < ApplicationRecord
   belongs_to :category
   has_many_attached :images do |attachable|
-    attachable.variant :thumb, resize_to_limit: [100, 100]
+    attachable.variant :thumb, resize_to_limit: [200, 200], format: :webp, saver: { quality: 80 }
+    attachable.variant :medium, resize_to_limit: [800, 800], format: :webp, saver: { quality: 85 }
+    attachable.variant :large, resize_to_limit: [1600, 1600], format: :webp, saver: { quality: 90 }
   end
   
   def sorted_images

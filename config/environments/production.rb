@@ -24,7 +24,14 @@ Rails.application.configure do
   # Store uploaded files on Cloudflare R2 (see config/storage.yml for options)
   config.active_storage.service = :cloudflare
   config.active_storage.track_variants = true
-  config.active_storage.resolve_model_to_route = :rails_storage_redirect
+  
+  # Optimization: Direct access to public R2 objects via CDN
+  # Requires CLOUDFLARE_R2_PUBLIC_URL environment variable (e.g., https://pub-xxx.r2.dev or custom domain)
+  if ENV["CLOUDFLARE_R2_PUBLIC_URL"].present?
+    config.active_storage.resolve_model_to_route = :rails_storage_proxy
+  else
+    config.active_storage.resolve_model_to_route = :rails_storage_redirect
+  end
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true

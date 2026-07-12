@@ -71,25 +71,30 @@
                    x-transition:enter-end="opacity-100 transform scale-100"
                    class="w-full h-full absolute inset-0">
                 <% begin %>
-                  <% variant_url = url_for(image.variant(resize_to_limit: [1200, 1200], saver: { quality: 90 })) %>
+                  <%# 使用预定义的 medium 变体，并强制 webp 以减少体积 %>
+                  <% variant = image.variant(:medium) %>
+                  <% variant_url = url_for(variant) %>
                   <!-- 基础图 -->
                   <%= image_tag variant_url, 
                                 class: "w-full h-full object-contain p-4 transition-opacity", 
                                 ":class": "{ 'opacity-0 duration-200': isZoomed, 'opacity-100 duration-0': !isZoomed }",
-                                style: "background-color: transparent;" %>
+                                style: "background-color: transparent;",
+                                loading: index == 0 ? "eager" : "lazy",
+                                alt: "#{@sku.name} - #{index + 1}" %>
                   
-                  <!-- 放大图 (仅在缩放时显示) -->
-                  <div x-show="isZoomed"
-                       x-transition:enter="transition opacity duration-200"
-                       class="absolute inset-0 z-20 pointer-events-none"
-                       :style="`
-                         background-image: url('<%= variant_url %>');
-                         background-size: 250%;
-                         background-position: ${zoomX}% ${zoomY}%;
-                         background-repeat: no-repeat;
-                         background-color: white;
-                       `">
-                  </div>
+                  <!-- 放大图 (仅在缩放时显示) - 使用 large 变体 -->
+                  <template x-if="isZoomed">
+                    <div class="absolute inset-0 z-20 pointer-events-none"
+                         :style="`
+                           background-image: url('${activeImage === <%= index %> ? '<%= url_for(image.variant(:large)) %>' : ''}');
+                           background-size: 250%;
+                           background-position: ${zoomX}% ${zoomY}%;
+                           background-repeat: no-repeat;
+                           background-color: white;
+                         `"
+                         x-transition:enter="transition opacity duration-200">
+                    </div>
+                  </template>
                 <% rescue ArgumentError, ActiveStorage::InvariableError %>
                   <%= image_tag image, class: "w-full h-full object-contain p-4 transition-transform duration-1000 ease-in-out", style: "background-color: transparent;" %>
                 <% end %>
