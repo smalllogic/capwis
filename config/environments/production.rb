@@ -25,28 +25,10 @@ Rails.application.configure do
   config.active_storage.service = :cloudflare
   config.active_storage.track_variants = true
   
-  # Set host for Active Storage URL generation
+  # Active Storage host configuration
+  config.active_storage.variant_processor = :vips
   config.after_initialize do
-    if ENV["CLOUDFLARE_R2_PUBLIC_URL"].present?
-      # Force Active Storage to use the custom public domain
-      # Note: For public buckets, we want simple URLs without S3 signatures
-      public_uri = URI.parse(ENV["CLOUDFLARE_R2_PUBLIC_URL"])
-      ActiveStorage::Current.url_options = {
-        host: public_uri.host,
-        protocol: public_uri.scheme,
-        port: public_uri.port
-      }
-      
-      # This ensures ActiveStorage generates direct URLs to the public domain
-      # for blobs that are served through the cloudflare service.
-      Rails.application.routes.default_url_options = ActiveStorage::Current.url_options
-    else
-      # Default to app host
-      ActiveStorage::Current.url_options = {
-        host: ENV.fetch("APP_HOST", "lincaps.com"),
-        protocol: "https"
-      }
-    end
+    ActiveStorage::Current.url_options = { host: ENV.fetch("APP_HOST", "lincaps.com"), protocol: "https" }
   end
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
