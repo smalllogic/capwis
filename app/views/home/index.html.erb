@@ -175,7 +175,7 @@
                       style: "transition-delay: #{i * 80}ms" do %>
             <div class="aspect-[3/4] overflow-hidden bg-white">
               <% if category.image.attached? %>
-                <%= image_tag category.image, class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" %>
+                <%= image_tag category.image.variant(:featured), class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" %>
               <% else %>
                 <div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-300 italic text-xs">No Image</div>
               <% end %>

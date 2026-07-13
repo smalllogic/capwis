@@ -45,7 +45,7 @@
                                 loading: index == 0 ? "eager" : "lazy",
                                 alt: "#{@sku.name} - #{index + 1}" %>
                 <% rescue ArgumentError, ActiveStorage::InvariableError %>
-                  <%= image_tag image, class: "w-full h-full object-contain p-4 transition-transform duration-1000 ease-in-out", style: "background-color: transparent;" %>
+                  <%= image_tag image.variant(:medium), class: "w-full h-full object-contain p-4 transition-transform duration-1000 ease-in-out", style: "background-color: transparent;" %>
                 <% end %>
               </div>
             <% end %>
