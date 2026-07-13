@@ -1,4 +1,6 @@
 class Admin::ContactMessagesController < Admin::BaseController
+  before_action :require_super_admin
+  
   def index
     @contact_messages = ContactMessage.order(created_at: :desc).page(params[:page]).per(20)
   end

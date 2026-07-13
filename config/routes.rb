@@ -25,7 +25,11 @@ Rails.application.routes.draw do
     end
     resources :posts
     resources :contact_messages, only: [:index, :show, :destroy]
-    resources :users, only: [:index, :show, :destroy]
+    resources :users, only: [:index, :show, :destroy] do
+      member do
+        patch :promote
+      end
+    end
     resources :visit_records, only: [:index] do
       collection do
         delete :clean

@@ -1,4 +1,6 @@
 class Admin::VisitRecordsController < Admin::BaseController
+  before_action :require_super_admin
+
   def index
     @visit_records = VisitRecord.order(visit_time: :desc).page(params[:page]).per(20)
     @total_count = VisitRecord.count
