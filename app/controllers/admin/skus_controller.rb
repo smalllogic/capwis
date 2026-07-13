@@ -16,7 +16,7 @@ class Admin::SkusController < Admin::BaseController
       @skus = @skus.where(category_id: @category_id)
     end
 
-    @categories = Category.where(id: Category.joins(:skus).distinct.pluck(:id)).order(:name)
+    @categories = Category.joins(:skus).distinct.order(:name)
 
     respond_to do |format|
       format.html
