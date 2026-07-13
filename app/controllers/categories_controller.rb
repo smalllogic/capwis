@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
       return
     end
 
-    @categories = Category.visible.where(parent_id: nil).includes(children: { children: :children })
+    @categories = Category.visible.where(parent_id: nil).includes(children: { children: { children: :children } })
     
     if @kind.present?
       @categories = @categories.where(category_kind: @kind)

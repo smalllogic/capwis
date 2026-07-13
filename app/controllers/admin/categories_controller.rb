@@ -2,7 +2,7 @@ class Admin::CategoriesController < Admin::BaseController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.where(parent_id: nil).includes(:children)
+    @categories = Category.unscoped.where(parent_id: nil).order(:position, :id).includes(:children)
   end
 
   def show
@@ -49,6 +49,6 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def category_params
-    params.require(:category).permit(:name, :parent_id, :category_kind, :hidden)
+    params.require(:category).permit(:name, :parent_id, :category_kind, :hidden, :position, :featured, :featured_position, :image)
   end
 end

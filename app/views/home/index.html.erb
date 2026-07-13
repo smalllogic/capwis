@@ -168,29 +168,49 @@
       <h2 class="text-4xl md:text-5xl font-black text-slate-900">Featured Products</h2>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-      <% [
-        { img: "product_baseball_cap.png",    name: "Baseball Cap",           tag: "Best Seller", color: "primary",   fit: "cover" },
-        { img: "product_bucket_cap.png",      name: "Bucket Cap",             tag: "Trending",    color: "secondary", fit: "contain" },
-        { img: "product_flat_bill_cap.png",   name: "Flat Bill Cap",          tag: "Custom",      color: "accent",    fit: "contain" },
-        { img: "product_kids_cap.png",        name: "Kids Cap",               tag: "Cute",        color: "primary",   fit: "cover" },
-        { img: "product_knit_beanie_cap.png", name: "Knit Beanie Cap",        tag: "Winter",      color: "secondary", fit: "cover" },
-        { img: "product_quick_dry_cap.png",   name: "Quick Dry Baseball Cap", tag: "Sport",       color: "accent",    fit: "cover" },
-        { img: "product_trucker_cap.png",     name: "Trucker Cap",            tag: "OEM Ready",   color: "primary",   fit: "cover" },
-        { img: "product_visor_cap.png",       name: "Visor Cap",              tag: "Summer",      color: "secondary", fit: "cover" },
-        { img: "product_winter_hats.png",     name: "Winter Hats",            tag: "Popular",     color: "accent",    fit: "cover" }
-      ].each_with_index do |cap, i| %>
-        <div class="reveal-product group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" style="transition-delay: <%= i * 80 %>ms">
-          <div class="aspect-[3/4] overflow-hidden bg-white">
-            <%= image_tag cap[:img], class: "w-full h-full #{cap[:fit] == 'contain' ? 'object-contain p-4' : 'object-cover'} group-hover:scale-105 transition-transform duration-700" %>
+      <% if @featured_categories.any? %>
+        <% @featured_categories.each_with_index do |category, i| %>
+          <%= link_to category_path(category), 
+                      class: "reveal-product group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer", 
+                      style: "transition-delay: #{i * 80}ms" do %>
+            <div class="aspect-[3/4] overflow-hidden bg-white">
+              <% if category.image.attached? %>
+                <%= image_tag category.image, class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" %>
+              <% else %>
+                <div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-300 italic text-xs">No Image</div>
+              <% end %>
+            </div>
+            <div class="absolute top-3 left-3">
+              <span class="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">Featured</span>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-5 pb-6 pt-16">
+              <p class="text-white font-black text-xl leading-tight drop-shadow-lg"><%= category.name %></p>
+              <p class="text-white/75 text-xs font-bold mt-1 uppercase tracking-widest">Custom · OEM · ODM</p>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% [
+          { img: "product_baseball_cap.png",    name: "Baseball Cap",           tag: "Best Seller", color: "primary",   fit: "cover" },
+          { img: "product_bucket_cap.png",      name: "Bucket Cap",             tag: "Trending",    color: "secondary", fit: "contain" },
+          { img: "product_flat_bill_cap.png",   name: "Flat Bill Cap",          tag: "Custom",      color: "accent",    fit: "contain" },
+          { img: "product_kids_cap.png",        name: "Kids Cap",               tag: "Cute",        color: "primary",   fit: "cover" },
+          { img: "product_knit_beanie_cap.png", name: "Knit Beanie Cap",        tag: "Winter",      color: "secondary", fit: "cover" },
+          { img: "product_quick_dry_cap.png",   name: "Quick Dry Baseball Cap", tag: "Sport",       color: "accent",    fit: "cover" }
+        ].each_with_index do |cap, i| %>
+          <div class="reveal-product group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" style="transition-delay: <%= i * 80 %>ms">
+            <div class="aspect-[3/4] overflow-hidden bg-white">
+              <%= image_tag cap[:img], class: "w-full h-full #{cap[:fit] == 'contain' ? 'object-contain p-4' : 'object-cover'} group-hover:scale-105 transition-transform duration-700" %>
+            </div>
+            <div class="absolute top-3 left-3">
+              <span class="bg-<%= cap[:color] %> text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"><%= cap[:tag] %></span>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-5 pb-6 pt-16">
+              <p class="text-white font-black text-xl leading-tight drop-shadow-lg"><%= cap[:name] %></p>
+              <p class="text-white/75 text-xs font-bold mt-1 uppercase tracking-widest">Custom · OEM · ODM</p>
+            </div>
           </div>
-          <div class="absolute top-3 left-3">
-            <span class="bg-<%= cap[:color] %> text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"><%= cap[:tag] %></span>
-          </div>
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-5 pb-6 pt-16">
-            <p class="text-white font-black text-xl leading-tight drop-shadow-lg"><%= cap[:name] %></p>
-            <p class="text-white/75 text-xs font-bold mt-1 uppercase tracking-widest">Custom · OEM · ODM</p>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>

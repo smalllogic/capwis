@@ -11,20 +11,19 @@ class ApplicationController < ActionController::Base
     path = request.path
     return if path == "/up"
     
-    # 确保 session 加载 (Rails 7/8 中 session 可能是惰性加载的)
-    # 不要在生产环境中因为 session.id.nil? 而主动写入，防止破坏登录 session
+    # 使用 session 标记避免同一个会话频繁查询数据库
+    return if session[:vrecord_tracked] && session[:vrecord_last_check] && Time.parse(session[:vrecord_last_check]) > 1.hour.ago
+
+    # 确保 session 加载
     session_id = session.id.to_s
     return if session_id.blank?
 
-    # 尝试获取真实客户端 IP (处理代理服务器情况)
-    # 如果用户在 cookie 中明确拒绝了 IP 追踪，则使用匿名 IP
+    # 尝试获取真实客户端 IP
     if cookies[:ip_tracking_allowed] == "false"
       real_ip = "0000.0000.0000"
     else
-      # 优先获取 X-Forwarded-For，它是大多数反向代理使用的标准头
       forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
       real_ip = if forwarded_for.present?
-                  # 取第一个（原始客户端）并进行基本的格式检查
                   forwarded_for.split(',').first&.strip
                 else
                   request.env['HTTP_X_REAL_IP'] || request.remote_ip
@@ -45,6 +44,10 @@ class ApplicationController < ActionController::Base
         path: path
       )
     end
+
+    # 标记本小时已检查，减少数据库压力
+    session[:vrecord_tracked] = true
+    session[:vrecord_last_check] = Time.current.to_s
   end
 
 end

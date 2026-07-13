@@ -2,11 +2,12 @@ class HomeController < ApplicationController
   before_action :check_submission_rate_limit, only: [:create_contact]
 
   def index
+    @featured_categories = Category.unscoped.where(featured: true).order(featured_position: :asc, id: :desc).with_attached_image
   end
 
   def all_products
-    @skus_by_category = Sku.where(status: 'active').includes(:category).order(position: :desc, created_at: :desc).group_by(&:category_id)
-    @root_categories = Category.where(parent_id: nil).includes(children: { children: :children })
+    @skus_by_category = Sku.where(status: 'active').order(position: :desc, created_at: :desc).group_by(&:category_id)
+    @root_categories = Category.where(parent_id: nil).includes(children: { children: { children: :children } })
   end
 
   def contact

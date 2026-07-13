@@ -1,7 +1,10 @@
 class Category < ApplicationRecord
-  has_many :children, class_name: "Category", foreign_key: :parent_id, dependent: :destroy
+  has_many :children, -> { unscoped.order(:position, :id) }, class_name: "Category", foreign_key: :parent_id, dependent: :destroy
   belongs_to :parent, class_name: "Category", optional: true
   has_many :skus, dependent: :destroy
+  has_one_attached :image
+
+  default_scope { order(:position, :id) }
 
   validates :name, presence: true
   validates :category_kind, presence: true, inclusion: { in: %w[a b c d] }
@@ -28,11 +31,11 @@ class Category < ApplicationRecord
 
   def all_descendant_ids
     ids = []
-    stack = children.visible.to_a
+    stack = children.unscoped.visible.to_a
     while stack.any?
       child = stack.pop
       ids << child.id
-      stack.concat(child.children.visible.to_a)
+      stack.concat(child.children.unscoped.visible.to_a)
     end
     ids
   end

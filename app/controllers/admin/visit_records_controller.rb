@@ -4,7 +4,7 @@ class Admin::VisitRecordsController < Admin::BaseController
   def index
     @visit_records = VisitRecord.order(visit_time: :desc).page(params[:page]).per(20)
     @total_count = VisitRecord.count
-    @today_count = VisitRecord.where("visit_time >= ?", 24.hours.ago).count
+    @today_count = VisitRecord.where("visit_time >= ?", Time.current.beginning_of_day).count
     @records_older_than_7_days = VisitRecord.where("visit_time < ?", 7.days.ago).count
   end
 

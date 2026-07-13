@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_13_010800) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_035253) do
   create_table "a_sku_details", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "net_capacity"
@@ -103,10 +103,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_010800) do
   create_table "categories", force: :cascade do |t|
     t.string "category_kind"
     t.datetime "created_at", null: false
+    t.boolean "featured", default: false
+    t.integer "featured_position", default: 0
     t.boolean "hidden", default: false, null: false
     t.string "name"
     t.string "name_zh"
     t.integer "parent_id"
+    t.integer "position"
     t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end

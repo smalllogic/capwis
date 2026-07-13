@@ -23,45 +23,9 @@
     <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-50 -z-0"></div>
     
     <!-- 左侧：媒体展示 (占 5/12) -->
-    <div class="lg:col-span-5 relative z-10 space-y-8" x-data="{ 
-      activeImage: 0, 
-      isZoomed: false, 
-      zoomX: 50, 
-      zoomY: 50,
-      containerWidth: 0,
-      containerHeight: 0,
-      init() {
-        this.$nextTick(() => {
-          this.updateDimensions();
-        });
-        window.addEventListener('resize', () => this.updateDimensions());
-      },
-      updateDimensions() {
-        const rect = this.$refs.zoomContainer.getBoundingClientRect();
-        this.containerWidth = rect.width;
-        this.containerHeight = rect.height;
-      },
-      handleZoom(e) {
-        const rect = this.$refs.zoomContainer.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        const x = clientX - rect.left;
-        const y = clientY - rect.top;
-        
-        // 限制在边界内
-        this.zoomX = Math.max(0, Math.min(100, (x / rect.width) * 100));
-        this.zoomY = Math.max(0, Math.min(100, (y / rect.height) * 100));
-        this.isZoomed = true;
-      }
-    }">
+    <div class="lg:col-span-5 relative z-10 space-y-8" x-data="{ activeImage: 0 }">
       <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl overflow-hidden group relative">
-        <div class="aspect-square relative overflow-hidden bg-slate-50 cursor-zoom-in"
-             x-ref="zoomContainer"
-             @mousemove="handleZoom"
-             @mouseleave="isZoomed = false"
-             @touchstart="handleZoom"
-             @touchmove="handleZoom"
-             @touchend="isZoomed = false">
+        <div class="aspect-square relative overflow-hidden bg-slate-50">
           <% if @sku.images.attached? %>
             <% @sku.sorted_images.each_with_index do |image, index| %>
               <div x-show="activeImage === <%= index %>" 
@@ -76,25 +40,10 @@
                   <% variant_url = url_for(variant) %>
                   <!-- 基础图 -->
                   <%= image_tag variant_url, 
-                                class: "w-full h-full object-contain p-4 transition-opacity", 
-                                ":class": "{ 'opacity-0 duration-200': isZoomed, 'opacity-100 duration-0': !isZoomed }",
+                                class: "w-full h-full object-contain p-4", 
                                 style: "background-color: transparent;",
                                 loading: index == 0 ? "eager" : "lazy",
                                 alt: "#{@sku.name} - #{index + 1}" %>
-                  
-                  <!-- 放大图 (仅在缩放时显示) - 使用 large 变体 -->
-                  <template x-if="isZoomed">
-                    <div class="absolute inset-0 z-20 pointer-events-none"
-                         :style="`
-                           background-image: url('${activeImage === <%= index %> ? '<%= url_for(image.variant(:large)) %>' : ''}');
-                           background-size: 250%;
-                           background-position: ${zoomX}% ${zoomY}%;
-                           background-repeat: no-repeat;
-                           background-color: white;
-                         `"
-                         x-transition:enter="transition opacity duration-200">
-                    </div>
-                  </template>
                 <% rescue ArgumentError, ActiveStorage::InvariableError %>
                   <%= image_tag image, class: "w-full h-full object-contain p-4 transition-transform duration-1000 ease-in-out", style: "background-color: transparent;" %>
                 <% end %>

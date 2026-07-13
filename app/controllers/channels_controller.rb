@@ -1,7 +1,7 @@
 class ChannelsController < ApplicationController
   def index
     @kind = params[:kind]
-    @categories = Category.where(parent_id: nil, category_kind: @kind).includes(children: { children: :children })
+    @categories = Category.unscoped.where(parent_id: nil, category_kind: @kind).order(:position, :id).includes(children: { children: { children: :children } })
     
     if params[:category_id].present?
       @current_category = Category.includes(parent: { parent: :parent }).find(params[:category_id])
