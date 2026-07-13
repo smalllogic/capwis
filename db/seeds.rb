@@ -59,18 +59,16 @@ sku_q6819.assign_attributes(
 sku_q6819.save!
 puts "✓ Created/Updated SKU: #{sku_q6819.item_no}"
 
-puts "Seeding SKU: Q6820..."
-sku_q6820 = Sku.find_or_initialize_by(item_no: "Q6820", category: category_all)
-sku_q6820.assign_attributes(
-  name: "Quick dry Cap / Quick dry Fashion Hat",
-  product_name: "Quick dry Cap / Quick dry Fashion Hat",
-  material: "Polyester /Nylon/Recycled Polyester/Nylon /Spandex / Elastane",
-  specification: "Stay Cool and Dry/Superior Quick-Dry/All-Day Breathability",
+puts "Seeding SKU: B6501..."
+sku_b6501 = Sku.find_or_initialize_by(item_no: "B6501", category: category_all)
+sku_b6501.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "100% cotton (customizable)",
+  specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Customizable/Metal Buckle/ Buckle Snap / Plastic Slide Buckle /",
-  embroidery_print: "Flat Embroidery/3D Embroidery / Flat Embroidery / Screen Printing / Heat Transfer/",
-  color: "Bright Apple Green/ Multi-color / Custom Pantone Color",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -79,21 +77,19 @@ sku_q6820.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_q6820.save!
-puts "✓ Created/Updated SKU: #{sku_q6820.item_no}"
+sku_b6501.save!
+puts "✓ Created/Updated SKU: #{sku_b6501.item_no}"
 
-puts "Seeding SKU: Q6821..."
-sku_q6821 = Sku.find_or_initialize_by(item_no: "Q6821", category: category_all)
-sku_q6821.assign_attributes(
-  name: "Quick dry Cap / Quick dry Fashion Hat",
-  product_name: "Quick dry Cap / Quick dry Fashion Hat",
-  material: "Polyester /Nylon/Recycled Polyester/Nylon /Spandex / Elastane",
-  specification: "Stay Cool and Dry/Superior Quick-Dry/All-Day Breathability",
+puts "Seeding SKU: B6502..."
+sku_b6502 = Sku.find_or_initialize_by(item_no: "B6502", category: category_all)
+sku_b6502.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "100% cotton (customizable)",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Customizable/Metal Buckle/ Buckle Snap / Plastic Slide Buckle /",
-  embroidery_print: "Flat Embroidery/3D Embroidery / Flat Embroidery / Screen Printing / Heat Transfer/",
-  color: "Black/ Multi-color / Custom Pantone Color",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -102,42 +98,19 @@ sku_q6821.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_q6821.save!
-puts "✓ Created/Updated SKU: #{sku_q6821.item_no}"
+sku_b6502.save!
+puts "✓ Created/Updated SKU: #{sku_b6502.item_no}"
 
-puts "Seeding SKU: Q6822..."
-sku_q6822 = Sku.find_or_initialize_by(item_no: "Q6822", category: category_all)
-sku_q6822.assign_attributes(
-  name: "Quick dry Cap / Quick dry Fashion Hat",
-  product_name: "Quick dry Cap / Quick dry Fashion Hat",
-  material: "Polyester /Nylon/Recycled Polyester/Nylon /Spandex / Elastane",
-  specification: "Stay Cool and Dry/Superior Quick-Dry/All-Day Breathability",
-  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Customizable/Metal Buckle/ Buckle Snap / Plastic Slide Buckle /",
-  embroidery_print: "Flat Embroidery/3D Embroidery / Flat Embroidery / Screen Printing / Heat Transfer/",
-  color: "Black/ Multi-color / Custom Pantone Color",
-  moq: "100 pcs per design color",
-  sample_time: "5-7 Working Days according to the cap style",
-  production_lead_time: "15-25 Working Days according to the cap style",
-  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
-  carton_size: "58 48 38cm",
-  gross_weight: "18-20KG/Carton",
-  status: "active"
-)
-sku_q6822.save!
-puts "✓ Created/Updated SKU: #{sku_q6822.item_no}"
-
-puts "Seeding SKU: Q6823..."
-sku_q6823 = Sku.find_or_initialize_by(item_no: "Q6823", category: category_all)
-sku_q6823.assign_attributes(
+puts "Seeding SKU: B6503..."
+sku_b6503 = Sku.find_or_initialize_by(item_no: "B6503", category: category_all)
+sku_b6503.assign_attributes(
   name: "Bucket hat / Blank bucket hat",
   product_name: "Bucket hat / Blank bucket hat",
   material: "Polyester",
   specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  embroidery_print: "Customizable /3D Embroidery / Screen Printing / Heat Transfer",
-  color: "Multi-color/ Custom Pantone Color",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -146,21 +119,19 @@ sku_q6823.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_q6823.save!
-puts "✓ Created/Updated SKU: #{sku_q6823.item_no}"
+sku_b6503.save!
+puts "✓ Created/Updated SKU: #{sku_b6503.item_no}"
 
-puts "Seeding SKU: Q6824..."
-sku_q6824 = Sku.find_or_initialize_by(item_no: "Q6824", category: category_all)
-sku_q6824.assign_attributes(
-  name: "Quick dry Cap / Quick dry Fashion Hat",
-  product_name: "Quick dry Cap / Quick dry Fashion Hat",
-  material: "Polyester /Nylon/Recycled Polyester/Nylon /Spandex / Elastane",
-  specification: "Stay Cool and Dry/Superior Quick-Dry/All-Day Breathability",
+puts "Seeding SKU: B6504..."
+sku_b6504 = Sku.find_or_initialize_by(item_no: "B6504", category: category_all)
+sku_b6504.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Customizable/Metal Buckle/ Buckle Snap / Plastic Slide Buckle /",
-  embroidery_print: "Flat Embroidery/3D Embroidery / Flat Embroidery / Screen Printing / Heat Transfer/",
-  color: "Beige/ Multi-color / Custom Pantone Color",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -169,21 +140,190 @@ sku_q6824.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_q6824.save!
-puts "✓ Created/Updated SKU: #{sku_q6824.item_no}"
+sku_b6504.save!
+puts "✓ Created/Updated SKU: #{sku_b6504.item_no}"
 
-puts "Seeding SKU: B6001..."
-sku_b6001 = Sku.find_or_initialize_by(item_no: "B6001", category: category_all)
-sku_b6001.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: B6505..."
+sku_b6505 = Sku.find_or_initialize_by(item_no: "B6505", category: category_all)
+sku_b6505.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Multi-color / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6505.save!
+puts "✓ Created/Updated SKU: #{sku_b6505.item_no}"
+
+puts "Seeding SKU: B6506..."
+sku_b6506 = Sku.find_or_initialize_by(item_no: "B6506", category: category_all)
+sku_b6506.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Tie dyed / Multi-color / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6506.save!
+puts "✓ Created/Updated SKU: #{sku_b6506.item_no}"
+
+puts "Seeding SKU: B6507..."
+sku_b6507 = Sku.find_or_initialize_by(item_no: "B6507", category: category_all)
+sku_b6507.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "100% cotton (customizable)",
+  specification: "Stay Cool and comfortable",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Flat embroidery / Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "White / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6507.save!
+puts "✓ Created/Updated SKU: #{sku_b6507.item_no}"
+
+puts "Seeding SKU: B6508..."
+sku_b6508 = Sku.find_or_initialize_by(item_no: "B6508", category: category_all)
+sku_b6508.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Dark grey / Multi-color / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6508.save!
+puts "✓ Created/Updated SKU: #{sku_b6508.item_no}"
+
+puts "Seeding SKU: B6509..."
+sku_b6509 = Sku.find_or_initialize_by(item_no: "B6509", category: category_all)
+sku_b6509.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester / mesh",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Light grey / Multi-color / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6509.save!
+puts "✓ Created/Updated SKU: #{sku_b6509.item_no}"
+
+puts "Seeding SKU: B6510..."
+sku_b6510 = Sku.find_or_initialize_by(item_no: "B6510", category: category_all)
+sku_b6510.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester / mesh",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Tie-dyed / Multi-color / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6510.save!
+puts "✓ Created/Updated SKU: #{sku_b6510.item_no}"
+
+puts "Seeding SKU: B6511..."
+sku_b6511 = Sku.find_or_initialize_by(item_no: "B6511", category: category_all)
+sku_b6511.assign_attributes(
+  name: "Bucket hat / Blank bucket hat",
+  product_name: "Bucket hat / Blank bucket hat",
+  material: "Polyester / mesh",
+  specification: "Lightweight Breathable Running Cap – UPF 50+ Sun Protection, Fast Drying Outdoor Hats, water proof",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  embroidery_print: "Customizable / 3D Embroidery / Screen Printing / Heat Transfer",
+  color: "Tie-dyed / Multi-color / Custom Pantone Color",
+  moq: "100 pcs per design color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_b6511.save!
+puts "✓ Created/Updated SKU: #{sku_b6511.item_no}"
+
+puts "Seeding SKU: W6501..."
+sku_w6501 = Sku.find_or_initialize_by(item_no: "W6501", category: category_all)
+sku_w6501.assign_attributes(
+  name: "Quilted Padded Winter Trapper hat with Ear flaps",
+  product_name: "Quilted Padded Winter Trapper hat with Ear flaps",
+  material: "Outer: Lightweight windproof polyester puffer fabric, Filling: Soft polyester cotton padding warm & lightweight, Lining: Smooth polyester lining",
+  specification: "Warm / cute and comfortable",
+  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
+  closure_type: "Cord lock",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Beige (Solid color / Multi-color / Custom Pantone Color)",
+  moq: "100 pcs per design per color",
+  sample_time: "5-7 Working Days according to the cap style",
+  production_lead_time: "15-25 Working Days according to the cap style",
+  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
+  carton_size: "58 48 38cm",
+  gross_weight: "18-20KG/Carton",
+  status: "active"
+)
+sku_w6501.save!
+puts "✓ Created/Updated SKU: #{sku_w6501.item_no}"
+
+puts "Seeding SKU: W6502..."
+sku_w6502 = Sku.find_or_initialize_by(item_no: "W6502", category: category_all)
+sku_w6502.assign_attributes(
+  name: "Faux Fur Lined Trapper baseball cap",
+  product_name: "Faux Fur Lined Trapper baseball cap",
+  material: "Outer: 100% cotton twill / washed cotton canvas, Ear flap lining: Soft thick faux fur (plush fleece), Inner crown lining: Thin polyester lining",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
   closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
-  embroidery_print: "Flat Embroidery (3D Embroidery /  Screen Printing / Heat Transfer )",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -192,21 +332,21 @@ sku_b6001.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6001.save!
-puts "✓ Created/Updated SKU: #{sku_b6001.item_no}"
+sku_w6502.save!
+puts "✓ Created/Updated SKU: #{sku_w6502.item_no}"
 
-puts "Seeding SKU: B6002..."
-sku_b6002 = Sku.find_or_initialize_by(item_no: "B6002", category: category_all)
-sku_b6002.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: T6301..."
+sku_t6301 = Sku.find_or_initialize_by(item_no: "T6301", category: category_all)
+sku_t6301.assign_attributes(
+  name: "Sun cap / Visor cap",
+  product_name: "Sun cap / Visor cap",
+  material: "100% cotton / quick dry material",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Plastic Slide（ BuckleVelcro Strap / Buckle Snap / Metal Buckle）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -215,21 +355,21 @@ sku_b6002.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6002.save!
-puts "✓ Created/Updated SKU: #{sku_b6002.item_no}"
+sku_t6301.save!
+puts "✓ Created/Updated SKU: #{sku_t6301.item_no}"
 
-puts "Seeding SKU: B6003..."
-sku_b6003 = Sku.find_or_initialize_by(item_no: "B6003", category: category_all)
-sku_b6003.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: T6302..."
+sku_t6302 = Sku.find_or_initialize_by(item_no: "T6302", category: category_all)
+sku_t6302.assign_attributes(
+  name: "Sun cap / Visor cap",
+  product_name: "Sun cap / Visor cap",
+  material: "100% cotton / quick dry material",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Plastic Slide Buckle /Velcro Strap / Buckle Snap /  Metal Buckle",
-  embroidery_print: "Flat Embroidery (3D Embroidery /  Screen Printing / Heat Transfer )",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -238,21 +378,21 @@ sku_b6003.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6003.save!
-puts "✓ Created/Updated SKU: #{sku_b6003.item_no}"
+sku_t6302.save!
+puts "✓ Created/Updated SKU: #{sku_t6302.item_no}"
 
-puts "Seeding SKU: B6004..."
-sku_b6004 = Sku.find_or_initialize_by(item_no: "B6004", category: category_all)
-sku_b6004.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: T6303..."
+sku_t6303 = Sku.find_or_initialize_by(item_no: "T6303", category: category_all)
+sku_t6303.assign_attributes(
+  name: "Sun cap / Visor cap",
+  product_name: "Sun cap / Visor cap",
+  material: "100% cotton / quick dry material",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Metal Buckle/ Buckle Snap / Plastic Slide Buckle / Velcro Strap",
-  embroidery_print: "Flat Embroidery (3D Embroidery /  Screen Printing / Heat Transfer )",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -261,21 +401,21 @@ sku_b6004.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6004.save!
-puts "✓ Created/Updated SKU: #{sku_b6004.item_no}"
+sku_t6303.save!
+puts "✓ Created/Updated SKU: #{sku_t6303.item_no}"
 
-puts "Seeding SKU: B6005..."
-sku_b6005 = Sku.find_or_initialize_by(item_no: "B6005", category: category_all)
-sku_b6005.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: T6201..."
+sku_t6201 = Sku.find_or_initialize_by(item_no: "T6201", category: category_all)
+sku_t6201.assign_attributes(
+  name: "6 panel trucker cap",
+  product_name: "6 panel trucker cap",
+  material: "Front: 100% cotton (customizable), Back: Polyester",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Metal Buckle（ BuckleVelcro Strap / Buckle Snap / Plastic Slide）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -284,21 +424,21 @@ sku_b6005.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6005.save!
-puts "✓ Created/Updated SKU: #{sku_b6005.item_no}"
+sku_t6201.save!
+puts "✓ Created/Updated SKU: #{sku_t6201.item_no}"
 
-puts "Seeding SKU: B6006..."
-sku_b6006 = Sku.find_or_initialize_by(item_no: "B6006", category: category_all)
-sku_b6006.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: T6202..."
+sku_t6202 = Sku.find_or_initialize_by(item_no: "T6202", category: category_all)
+sku_t6202.assign_attributes(
+  name: "5 panel trucker cap",
+  product_name: "5 panel trucker cap",
+  material: "Front: Corduroy, Back: Polyester",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Metal Slider（ BuckleVelcro Strap / Buckle Snap / Plastic Slide）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Multi-color / Custom Pantone Color",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -307,21 +447,21 @@ sku_b6006.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6006.save!
-puts "✓ Created/Updated SKU: #{sku_b6006.item_no}"
+sku_t6202.save!
+puts "✓ Created/Updated SKU: #{sku_t6202.item_no}"
 
-puts "Seeding SKU: B6007..."
-sku_b6007 = Sku.find_or_initialize_by(item_no: "B6007", category: category_all)
-sku_b6007.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: F6101..."
+sku_f6101 = Sku.find_or_initialize_by(item_no: "F6101", category: category_all)
+sku_f6101.assign_attributes(
+  name: "6 panel 100% cotton flat bill cap",
+  product_name: "6 panel 100% cotton flat bill cap",
+  material: "100% cotton (customizable)",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Metal Slider（ BuckleVelcro Strap / Buckle Snap / Plastic Slide）",
-  embroidery_print: "Applique Embroider（Flat Embroidery Screen Printing / Heat Transfer /3D Embroidery)",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Velcro Strap / Buckle Snap / Plastic Slide Buckle / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Black (Solid color / Multi-color / Custom Pantone Color)",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -330,21 +470,21 @@ sku_b6007.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6007.save!
-puts "✓ Created/Updated SKU: #{sku_b6007.item_no}"
+sku_f6101.save!
+puts "✓ Created/Updated SKU: #{sku_f6101.item_no}"
 
-puts "Seeding SKU: B6008..."
-sku_b6008 = Sku.find_or_initialize_by(item_no: "B6008", category: category_all)
-sku_b6008.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: F6102..."
+sku_f6102 = Sku.find_or_initialize_by(item_no: "F6102", category: category_all)
+sku_f6102.assign_attributes(
+  name: "6 panel quick dry material flat bill cap",
+  product_name: "6 panel quick dry material flat bill cap",
+  material: "Polyester",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Metal Buckle（ Metal Slider/BuckleVelcro Strap / Buckle Snap / Plastic Slide）",
-  embroidery_print: "Applique Embroider（Flat Embroidery /Screen Printing / Heat Transfer /3D Embroidery)",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Plastic Slide Buckle / Velcro Strap / Buckle Snap / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Black (Solid color / Multi-color / Custom Pantone Color)",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -353,21 +493,21 @@ sku_b6008.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6008.save!
-puts "✓ Created/Updated SKU: #{sku_b6008.item_no}"
+sku_f6102.save!
+puts "✓ Created/Updated SKU: #{sku_f6102.item_no}"
 
-puts "Seeding SKU: B6009..."
-sku_b6009 = Sku.find_or_initialize_by(item_no: "B6009", category: category_all)
-sku_b6009.assign_attributes(
-  name: "6 panel 100% cotton baseball cap",
-  product_name: "6 panel 100% cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: F6103..."
+sku_f6103 = Sku.find_or_initialize_by(item_no: "F6103", category: category_all)
+sku_f6103.assign_attributes(
+  name: "6 panel quick dry material flat bill cap",
+  product_name: "6 panel quick dry material flat bill cap",
+  material: "Polyester",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
   brim_length: "7cm / 7.5cm / 8cm",
-  closure_type: "Metal Buckle（ Metal Slider/BuckleVelcro Strap / Buckle Snap / Plastic Slide）",
-  embroidery_print: "Applique Embroider（Flat Embroidery /Screen Printing / Heat Transfer /3D Embroidery)",
-  color: "Beige(Solid color / Multi-color / Custom Pantone Color)",
+  closure_type: "Cord lock / Plastic Slide Buckle / Velcro Strap / Buckle Snap / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Black (Solid color / Multi-color / Custom Pantone Color)",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -376,21 +516,21 @@ sku_b6009.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6009.save!
-puts "✓ Created/Updated SKU: #{sku_b6009.item_no}"
+sku_f6103.save!
+puts "✓ Created/Updated SKU: #{sku_f6103.item_no}"
 
-puts "Seeding SKU: B6010..."
-sku_b6010 = Sku.find_or_initialize_by(item_no: "B6010", category: category_all)
-sku_b6010.assign_attributes(
-  name: "6 panel 100% washed cotton baseball cap",
-  product_name: "6 panel 100% washed cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: F6104..."
+sku_f6104 = Sku.find_or_initialize_by(item_no: "F6104", category: category_all)
+sku_f6104.assign_attributes(
+  name: "Multi panel flat bill cap",
+  product_name: "Multi panel flat bill cap",
+  material: "100% cotton",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm/customize",
-  closure_type: "Plastic Slide（ BuckleVelcro Strap / Buckle Snap / Metal Buckle）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Light blue(Solid color / Multi-color / Custom Pantone Color)",
+  brim_length: "7cm / 7.5cm / 8cm",
+  closure_type: "Plastic Slide Buckle / Velcro Strap / Buckle Snap / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Black (Solid color / Multi-color / Custom Pantone Color)",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -399,21 +539,21 @@ sku_b6010.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6010.save!
-puts "✓ Created/Updated SKU: #{sku_b6010.item_no}"
+sku_f6104.save!
+puts "✓ Created/Updated SKU: #{sku_f6104.item_no}"
 
-puts "Seeding SKU: B6011..."
-sku_b6011 = Sku.find_or_initialize_by(item_no: "B6011", category: category_all)
-sku_b6011.assign_attributes(
-  name: "6 panel 100% washed cotton baseball cap",
-  product_name: "6 panel 100% washed cotton baseball cap",
-  material: "100% cutton (customizable)",
+puts "Seeding SKU: F6105..."
+sku_f6105 = Sku.find_or_initialize_by(item_no: "F6105", category: category_all)
+sku_f6105.assign_attributes(
+  name: "Multi panel and color flat bill cap",
+  product_name: "Multi panel and color flat bill cap",
+  material: "100% cotton",
   specification: "Stay Cool and comfortable",
   head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm/customize",
-  closure_type: "Plastic Slide（ BuckleVelcro Strap / Buckle Snap / Metal Buckle）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Earthy Khaki(Solid color / Multi-color / Custom Pantone Color)",
+  brim_length: "7cm / 7.5cm / 8cm",
+  closure_type: "Plastic Slide Buckle / Velcro Strap / Buckle Snap / Metal Buckle",
+  embroidery_print: "Flat Embroidery (3D Embroidery / Screen Printing / Heat Transfer)",
+  color: "Black (Solid color / Multi-color / Custom Pantone Color)",
   moq: "100 pcs per design per color",
   sample_time: "5-7 Working Days according to the cap style",
   production_lead_time: "15-25 Working Days according to the cap style",
@@ -422,75 +562,6 @@ sku_b6011.assign_attributes(
   gross_weight: "18-20KG/Carton",
   status: "active"
 )
-sku_b6011.save!
-puts "✓ Created/Updated SKU: #{sku_b6011.item_no}"
-
-puts "Seeding SKU: B6012..."
-sku_b6012 = Sku.find_or_initialize_by(item_no: "B6012", category: category_all)
-sku_b6012.assign_attributes(
-  name: "6 panel 100% washed cotton baseball cap",
-  product_name: "6 panel 100% washed cotton baseball cap",
-  material: "100% cutton (customizable)",
-  specification: "Stay Cool and comfortable",
-  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm/customize",
-  closure_type: "Plastic Slide（ BuckleVelcro Strap / Buckle Snap / Metal Buckle）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Burgundy(Solid color / Multi-color / Custom Pantone Color)",
-  moq: "100 pcs per design per color",
-  sample_time: "5-7 Working Days according to the cap style",
-  production_lead_time: "15-25 Working Days according to the cap style",
-  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
-  carton_size: "58 48 38cm",
-  gross_weight: "18-20KG/Carton",
-  status: "active"
-)
-sku_b6012.save!
-puts "✓ Created/Updated SKU: #{sku_b6012.item_no}"
-
-puts "Seeding SKU: B6013..."
-sku_b6013 = Sku.find_or_initialize_by(item_no: "B6013", category: category_all)
-sku_b6013.assign_attributes(
-  name: "6 panel 100% washed cotton baseball cap",
-  product_name: "6 panel 100% washed cotton baseball cap",
-  material: "100% cutton (customizable)",
-  specification: "Stay Cool and comfortable",
-  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm/customize",
-  closure_type: "Plastic Slide（ BuckleVelcro Strap / Buckle Snap / Metal Buckle）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Dark grey(Solid color / Multi-color / Custom Pantone Color)",
-  moq: "100 pcs per design per color",
-  sample_time: "5-7 Working Days according to the cap style",
-  production_lead_time: "15-25 Working Days according to the cap style",
-  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
-  carton_size: "58 48 38cm",
-  gross_weight: "18-20KG/Carton",
-  status: "active"
-)
-sku_b6013.save!
-puts "✓ Created/Updated SKU: #{sku_b6013.item_no}"
-
-puts "Seeding SKU: B6014..."
-sku_b6014 = Sku.find_or_initialize_by(item_no: "B6014", category: category_all)
-sku_b6014.assign_attributes(
-  name: "6 panel 100% washed cotton baseball cap",
-  product_name: "6 panel 100% washed cotton baseball cap",
-  material: "100% cutton (customizable)",
-  specification: "Stay Cool and comfortable",
-  head_circumference: "54-58cm (Adjustable) / 56-60cm (Adjustable)",
-  brim_length: "7cm / 7.5cm / 8cm/customize",
-  closure_type: "Plastic Slide（ BuckleVelcro Strap / Buckle Snap / Metal Buckle）",
-  embroidery_print: "3D Embroidery（Flat Embroidery Screen Printing / Heat Transfer )",
-  color: "Red(Solid color / Multi-color / Custom Pantone Color)",
-  moq: "100 pcs per design per color",
-  sample_time: "5-7 Working Days according to the cap style",
-  production_lead_time: "15-25 Working Days according to the cap style",
-  packing: "1pc/opp bag, 25pcs/inner box, 200pcs/carton",
-  carton_size: "58 48 38cm",
-  gross_weight: "18-20KG/Carton",
-  status: "active"
-)
-sku_b6014.save!
-puts "✓ Created/Updated SKU: #{sku_b6014.item_no}"
+sku_f6105.save!
+puts "✓ Created/Updated SKU: #{sku_f6105.item_no}"
 
