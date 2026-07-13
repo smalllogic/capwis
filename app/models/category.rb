@@ -33,14 +33,19 @@ class Category < ApplicationRecord
   end
 
   def all_descendant_ids
-    ids = []
-    stack = children.unscoped.visible.to_a
+    # Fetch all visible categories once and group them by parent_id to avoid N+1 queries
+    all_visible = Category.unscoped.visible.select(:id, :parent_id).to_a
+    children_map = all_visible.group_by(&:parent_id)
+    
+    desc_ids = []
+    stack = children_map[id] || []
+    
     while stack.any?
       child = stack.pop
-      ids << child.id
-      stack.concat(child.children.unscoped.visible.to_a)
+      desc_ids << child.id
+      stack.concat(children_map[child.id] || [])
     end
-    ids
+    desc_ids
   end
 
   def ancestors_and_self
