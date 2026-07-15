@@ -1,0 +1,16 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "restartPolicyType": "ON_FAILURE",
+    "numReplicas": 1,
+    "env": {
+      "NIXPACKS_PKGS": "vips",
+      "RAILS_LOG_TO_STDOUT": "enabled",
+      "RAILS_SERVE_STATIC_FILES": "true",
+      "SOLID_QUEUE_IN_PUMA": "true"
+    }
+  }
+}

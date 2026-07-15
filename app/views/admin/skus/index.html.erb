@@ -1,0 +1,129 @@
+<% content_for :admin_title, "SKU 管理" %>
+
+<div class="mb-6 flex justify-between items-center">
+  <p class="text-slate-600">管理所有的产品型号 (SKU)。注意：只能在叶子分类下创建 SKU。</p>
+  <div class="flex items-center space-x-3">
+    <%= link_to "添加 SKU", new_admin_sku_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" %>
+  </div>
+</div>
+
+<div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+  <form action="<%= admin_skus_path %>" method="get" class="flex flex-col md:flex-row items-stretch md:items-center space-y-3 md:space-y-0 md:space-x-4 flex-grow">
+    <div class="relative flex-grow max-w-md">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <input type="text" name="q" value="<%= @q %>" placeholder="搜索产品名称或型号..." 
+             class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all">
+    </div>
+
+    <div class="flex items-center space-x-2 min-w-[200px]">
+      <select name="category_id" onchange="this.form.submit()" 
+              class="block w-full px-3 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+        <option value="">所有叶子分类</option>
+        <% @categories.each do |cat| %>
+          <option value="<%= cat.id %>" <%= 'selected' if @category_id.to_s == cat.id.to_s %>>
+            <%= cat.localized_name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+        搜索
+      </button>
+      <% if @q.present? || @category_id.present? %>
+        <%= link_to "重置", admin_skus_path, class: "text-slate-500 hover:text-slate-700 text-sm font-medium px-2" %>
+      <% end %>
+    </div>
+  </form>
+
+  <div class="flex items-center justify-end space-x-3 md:ml-4">
+    <%= link_to "导出 CSV", admin_skus_path(format: :csv, q: @q, category_id: @category_id), class: "text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors" %>
+  </div>
+</div>
+
+<%= form_with url: update_positions_admin_skus_path, method: :patch, local: true do %>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-50 border-b border-slate-200">
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700">预览</th>
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700">排序</th>
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700">名称</th>
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700">分类</th>
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700">核心规格</th>
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700 text-center">状态</th>
+            <th class="px-6 py-4 text-sm font-semibold text-slate-700 text-right">操作</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% if @skus.empty? %>
+            <tr>
+              <td colspan="7" class="px-6 py-12 text-center text-slate-500 text-sm">
+                <% if @q.present? || @category_id.present? %>
+                  未找到匹配的 SKU，请尝试其他关键词或分类。
+                <% else %>
+                  暂无 SKU。
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% @skus.each do |sku| %>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4">
+                <% if sku.images.attached? %>
+                  <% begin %>
+                    <%= image_tag sku.sorted_images.first.variant(resize_to_limit: [50, 50]), class: "rounded-md shadow-sm" %>
+                  <% rescue ArgumentError, ActiveStorage::FileNotFoundError, ActiveStorage::InvariableError %>
+                    <div class="w-10 h-10 bg-red-50 rounded-md flex items-center justify-center text-red-400 text-[10px] text-center" title="文件无效或非图片，请重新上传">无效</div>
+                  <% end %>
+                <% else %>
+                  <div class="w-10 h-10 bg-slate-100 rounded-md flex items-center justify-center text-slate-400 text-[10px]">无图</div>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-500 font-mono">
+                <input type="number" name="positions[<%= sku.id %>]" value="<%= sku.position %>" 
+                       class="w-20 px-2 py-1 border border-slate-300 rounded focus:ring-blue-500 focus:border-blue-500 text-sm">
+              </td>
+              <td class="px-6 py-4 text-sm font-medium text-slate-800"><%= sku.name %></td>
+              <td class="px-6 py-4 text-sm text-slate-600"><%= sku.category.localized_name %></td>
+              <td class="px-6 py-4 text-sm text-slate-600">
+                <% if sku.fabric.present? %>
+                  <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider">Fabric</span>
+                  <span class="block mb-1"><%= sku.fabric %></span>
+                <% end %>
+                <% if sku.closure.present? %>
+                  <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider">Closure</span>
+                  <span class="block"><%= sku.closure %></span>
+                <% end %>
+                <% if sku.fabric.blank? && sku.closure.blank? %>
+                  <span class="text-slate-400 italic">No specs</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 text-sm text-center">
+                <span class="px-2 py-1 rounded-full text-xs font-medium <%= sku.status == 'active' ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700' %>">
+                  <%= sku.status.upcase %>
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-right space-x-3">
+                <%= link_to "编辑", edit_admin_sku_path(sku), class: "text-blue-600 hover:text-blue-800 font-medium" %>
+                <%= link_to "删除", admin_sku_path(sku), data: { turbo_method: :delete, turbo_confirm: "确定要删除该 SKU 吗？" }, class: "text-red-500 hover:text-red-700 font-medium" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end">
+    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-all hover:shadow-md active:scale-95">
+      批量保存权重
+    </button>
+  </div>
+<% end %>

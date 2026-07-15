@@ -1,0 +1,122 @@
+<div class="bg-slate-50 min-h-screen pb-20">
+  <!-- Header Section -->
+  <div class="bg-dark py-16 mb-12">
+    <div class="max-w-screen-xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">
+            <%= t('categories.all_products_catalog') %>
+          </h1>
+          <p class="text-slate-400 text-lg font-medium max-w-2xl">
+            <%= t('categories.all_products_desc') %>
+          </p>
+        </div>
+        <div class="hidden md:block">
+          <div class="text-right">
+            <div class="text-3xl font-black text-primary mb-1"><%= Sku.count %></div>
+            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-nowrap"><%= t('categories.total_products_count') %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-screen-xl mx-auto px-6">
+    <% @root_categories.order(:category_kind).each do |root| %>
+      <div class="mb-20">
+        <!-- Root Channel Header -->
+        <div class="flex items-center gap-4 mb-8 border-b border-slate-200 pb-4">
+          <span class="px-3 py-1 bg-primary text-white text-xs font-black rounded-md uppercase">
+            <%= case root.category_kind
+                when 'a' then t('navbar.cooling')
+                when 'b' then t('navbar.cooking')
+                when 'c' then t('navbar.stainless')
+                else root.category_kind.upcase
+                end %>
+          </span>
+          <h2 class="text-2xl font-black text-dark tracking-tight">
+            <%= link_to root.localized_name, category_path(root), class: "hover:text-primary transition-colors" %>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <% root.children.order(:name).each do |sub1| %>
+            <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/20 transition-all duration-500 group">
+              <h3 class="text-xl font-black text-dark mb-6 flex items-center justify-between border-b border-slate-50 pb-4 group-hover:border-primary/20 transition-colors">
+                <%= link_to sub1.localized_name, category_path(sub1), class: "hover:text-primary" %>
+                <span class="text-slate-300 group-hover:text-primary transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                </span>
+              </h3>
+
+              <div class="space-y-6">
+                <!-- Level 3 Categories -->
+                <% sub1.children.order(:name).each do |sub2| %>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                      <span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+                      <%= link_to sub2.localized_name, category_path(sub2), class: "hover:text-secondary transition-colors" %>
+                    </h4>
+                    
+                    <% if sub2.children.any? %>
+                      <!-- Level 4 Categories and their products -->
+                      <div class="ml-3 space-y-4">
+                        <% sub2.children.order(:name).each do |sub3| %>
+                          <div class="pl-3 border-l-2 border-slate-50 hover:border-accent transition-colors py-1">
+                            <h5 class="text-[13px] font-bold text-slate-700 mb-2">
+                              <%= link_to sub3.localized_name, category_path(sub3), class: "hover:text-accent" %>
+                            </h5>
+                            
+                            <ul class="grid grid-cols-1 gap-1.5">
+                              <% skus = @skus_by_category[sub3.id] || [] %>
+                              <% skus.each do |sku| %>
+                                <li>
+                                  <%= link_to sku_path(sku), class: "text-sm text-slate-500 hover:text-primary flex items-center group/sku py-0.5" do %>
+                                    <span class="w-1 h-1 bg-slate-200 group-hover/sku:bg-primary rounded-full mr-2 transition-colors"></span>
+                                    <span class="truncate"><%= sku.name %></span>
+                                  <% end %>
+                                </li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <!-- Direct products under Level 3 if no Level 4 -->
+                      <ul class="ml-3 grid grid-cols-1 gap-1.5">
+                        <% skus = @skus_by_category[sub2.id] || [] %>
+                        <% skus.each do |sku| %>
+                          <li>
+                            <%= link_to sku_path(sku), class: "text-sm text-slate-500 hover:text-secondary flex items-center group/sku py-0.5" do %>
+                              <span class="w-1 h-1 bg-slate-200 group-hover/sku:bg-secondary rounded-full mr-2 transition-colors"></span>
+                              <span class="truncate"><%= sku.name %></span>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <!-- Direct products under Level 2 if no Level 3 -->
+                <% if sub1.children.empty? %>
+                  <ul class="grid grid-cols-1 gap-1.5">
+                    <% skus = @skus_by_category[sub1.id] || [] %>
+                    <% skus.each do |sku| %>
+                      <li>
+                        <%= link_to sku_path(sku), class: "text-sm text-slate-500 hover:text-primary flex items-center group/sku py-0.5" do %>
+                          <span class="w-1 h-1 bg-slate-200 group-hover/sku:bg-primary rounded-full mr-2 transition-colors"></span>
+                          <span class="truncate"><%= sku.name %></span>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
