@@ -105,7 +105,7 @@
           <% @current_category.ancestors_and_self.each do |cat| %>
             <div class="flex items-center space-x-2">
               <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-              <%= link_to channel_path(@kind, category_id: cat.id), class: "px-3 py-1.5 rounded-xl transition-all #{cat == @current_category ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'text-slate-500 hover:bg-slate-100 hover:text-primary'}" do %>
+              <%= link_to channel_path(@kind, category_id: cat), class: "px-3 py-1.5 rounded-xl transition-all #{cat == @current_category ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'text-slate-500 hover:bg-slate-100 hover:text-primary'}" do %>
                 <span class="text-xs tracking-wide"><%= cat.localized_name %></span>
               <% end %>
             </div>
@@ -118,13 +118,13 @@
           <div class="flex items-center space-x-2">
             <% if @current_category && @current_category.children.any? %>
               <% @current_category.children.each do |child| %>
-                <%= link_to channel_path(@kind, category_id: child.id), class: "px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-600 hover:border-slate-400 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all" do %>
+                <%= link_to channel_path(@kind, category_id: child), class: "px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-600 hover:border-slate-400 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all" do %>
                   <%= child.localized_name %>
                 <% end %>
               <% end %>
             <% elsif @current_category.nil? %>
               <% @categories.each do |cat| %>
-                <%= link_to channel_path(@kind, category_id: cat.id), class: "px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-600 hover:border-slate-400 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all" do %>
+                <%= link_to channel_path(@kind, category_id: cat), class: "px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-bold text-slate-600 hover:border-slate-400 hover:text-slate-900 hover:bg-white hover:shadow-sm transition-all" do %>
                   <%= cat.localized_name %>
                 <% end %>
               <% end %>

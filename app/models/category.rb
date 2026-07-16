@@ -11,8 +11,13 @@ class Category < ApplicationRecord
 
   validates :name, presence: true
   validates :category_kind, presence: true, inclusion: { in: %w[a b c d] }
+  validates :slug, presence: true, uniqueness: true, format: { with: /\A[a-z0-9-]+\z/, message: "只能包含小写字母、数字和连字符" }
   
   scope :visible, -> { where(hidden: false) }
+
+  def to_param
+    slug.presence || id.to_s
+  end
   validate :leaf_category_constraint_for_parent
   validate :consistent_category_kind
 

@@ -49,6 +49,25 @@ class HomeController < ApplicationController
     end
   end
 
+  def robots
+    config = SiteConfig.get
+    if config.robots.attached?
+      render plain: config.robots.download, content_type: 'text/plain'
+    else
+      # 默认 robots.txt 内容
+      render plain: "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /users/\nDisallow: /up\n\nSitemap: #{root_url}sitemap.xml", content_type: 'text/plain'
+    end
+  end
+
+  def sitemap
+    config = SiteConfig.get
+    if config.sitemap.attached?
+      render xml: config.sitemap.download
+    else
+      render xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>#{root_url}</loc>\n    <priority>1.0</priority>\n  </url>\n</urlset>", status: :not_found
+    end
+  end
+
   private
 
   def verify_turnstile(token)

@@ -62,6 +62,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   
   # Handle common missing routes to reduce RoutingError noise
+  get "/robots.txt", to: "home#robots"
+  get "/sitemap.xml", to: "home#sitemap"
   get "/favicon.ico", to: ->(env) { [204, {}, [""]] }
   # get "/sitemap.xml", to: ->(env) { [404, {}, ["Not Found"]] }
   get "/.well-known/traffic-advice", to: ->(env) { [404, {}, ["Not Found"]] }

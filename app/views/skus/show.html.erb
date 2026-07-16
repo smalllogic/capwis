@@ -11,7 +11,7 @@
     <% end %>
     <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
     <% @sku.category.ancestors_and_self.each do |cat| %>
-      <%= link_to cat.localized_name, categories_path(category_id: cat.id), class: "text-slate-400 hover:text-primary transition-colors" %>
+      <%= link_to cat.localized_name, categories_path(category_id: cat), class: "text-slate-400 hover:text-primary transition-colors" %>
       <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
     <% end %>
     <span class="text-dark truncate max-w-[200px]"><%= @sku.name %></span>

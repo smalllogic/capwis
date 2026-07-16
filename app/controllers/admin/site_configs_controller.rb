@@ -23,7 +23,7 @@ class Admin::SiteConfigsController < Admin::BaseController
     params.require(:site_config).permit(
       :name, :meta_title, :meta_keywords, :meta_description,
       :phone, :email, :address, :copyright_year, :statistics_code,
-      :logo, :favicon
+      :logo, :favicon, :sitemap, :robots
     )
   end
 end

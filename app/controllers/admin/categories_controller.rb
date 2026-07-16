@@ -45,10 +45,12 @@ class Admin::CategoriesController < Admin::BaseController
   private
 
   def set_category
+    @category = Category.find_by!(slug: params[:id])
+  rescue ActiveRecord::RecordNotFound
     @category = Category.find(params[:id])
   end
 
   def category_params
-    params.require(:category).permit(:name, :parent_id, :category_kind, :hidden, :position, :featured, :featured_position, :image, :meta_title, :meta_description, :meta_keywords)
+    params.require(:category).permit(:name, :slug, :parent_id, :category_kind, :hidden, :position, :featured, :featured_position, :image, :meta_title, :meta_description, :meta_keywords)
   end
 end
