@@ -21,6 +21,9 @@ class Admin::SkusController < Admin::BaseController
     respond_to do |format|
       format.html
       format.csv do
+        unless current_user.super_admin?
+          return redirect_to admin_skus_path, alert: "只有大管理员才能导出 CSV。"
+        end
         @export_skus = @skus
         send_data generate_csv(@export_skus), filename: "skus-#{Date.today}.csv"
       end
@@ -28,6 +31,9 @@ class Admin::SkusController < Admin::BaseController
   end
 
   def export
+    unless current_user.super_admin?
+      return redirect_to admin_skus_path, alert: "只有大管理员才能导出 CSV。"
+    end
     @skus = Sku.includes(category: :parent, images_attachments: :blob).order(position: :asc, created_at: :desc)
     send_data generate_csv(@skus), filename: "all-skus-#{Date.today}.csv"
   end
@@ -146,7 +152,6 @@ class Admin::SkusController < Admin::BaseController
   private
 
   def generate_csv(skus)
-    require 'csv'
     CSV.generate(headers: true) do |csv|
       # 定义表头
       base_headers = ["ID", "Position", "Name", "Channel", "Category Path", "Price", "Status", "Image URLs"]

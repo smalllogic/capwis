@@ -42,7 +42,9 @@
   </form>
 
   <div class="flex items-center justify-end space-x-3 md:ml-4">
-    <%= link_to "导出 CSV", admin_skus_path(format: :csv, q: @q, category_id: @category_id), class: "text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors" %>
+    <% if current_user.super_admin? %>
+      <%= link_to "导出 CSV", admin_skus_path(format: :csv, q: @q, category_id: @category_id), class: "text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors" %>
+    <% end %>
   </div>
 </div>
 
