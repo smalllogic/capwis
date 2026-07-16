@@ -1,5 +1,6 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = 'https://lincaps.com'
+SitemapGenerator::Sitemap.compress = false
 
 SitemapGenerator::Sitemap.create do
   # 首页和 sitemap 索引文件会自动添加

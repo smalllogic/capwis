@@ -63,6 +63,8 @@ class HomeController < ApplicationController
     config = SiteConfig.get
     if config.sitemap.attached?
       render xml: config.sitemap.download
+    elsif File.exist?(Rails.root.join('public', 'sitemap.xml'))
+      render xml: File.read(Rails.root.join('public', 'sitemap.xml'))
     else
       render xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>#{root_url}</loc>\n    <priority>1.0</priority>\n  </url>\n</urlset>", status: :not_found
     end
