@@ -32,6 +32,16 @@ Rails.application.routes.draw do
     end
     resources :about_carousels
     resources :home_products
+    resources :login_logs, only: [:index] do
+      collection do
+        delete :clear
+      end
+    end
+    resources :operation_logs, only: [:index, :show] do
+      collection do
+        delete :clear
+      end
+    end
     resource :site_config, only: [:edit, :update]
     resources :users, only: [:index, :edit, :update, :destroy] do
       member do

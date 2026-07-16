@@ -1,0 +1,56 @@
+<div class="mb-6">
+  <%= link_to admin_operation_logs_path, class: "text-slate-500 hover:text-primary flex items-center text-sm transition-colors" do %>
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+    </svg>
+    返回列表
+  <% end %>
+  <h1 class="text-2xl font-bold text-slate-800 mt-2">操作日志详情</h1>
+</div>
+
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+    <div>
+      <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">基本信息</h3>
+      <dl class="space-y-3">
+        <div class="flex justify-between">
+          <dt class="text-slate-500 text-sm">操作用户:</dt>
+          <dd class="text-slate-900 text-sm font-medium"><%= @operation_log.user&.email %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-slate-500 text-sm">操作时间:</dt>
+          <dd class="text-slate-900 text-sm font-medium"><%= @operation_log.created_at.strftime("%Y-%m-%d %H:%M:%S") %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-slate-500 text-sm">IP 地址:</dt>
+          <dd class="text-slate-900 text-sm font-mono"><%= @operation_log.ip_address %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-slate-500 text-sm">Action:</dt>
+          <dd class="text-slate-900 text-sm font-mono bg-slate-100 px-1 rounded"><%= @operation_log.action %></dd>
+        </div>
+      </dl>
+    </div>
+    
+    <div>
+      <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">资源信息</h3>
+      <dl class="space-y-3">
+        <div class="flex justify-between">
+          <dt class="text-slate-500 text-sm">资源类型:</dt>
+          <dd class="text-slate-900 text-sm font-medium"><%= @operation_log.resource_type %></dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-slate-500 text-sm">资源 ID:</dt>
+          <dd class="text-slate-900 text-sm font-medium"><%= @operation_log.resource_id || 'N/A' %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">操作详情 (Parameters)</h3>
+    <div class="bg-slate-900 rounded-lg p-6 overflow-x-auto">
+      <pre class="text-green-400 text-sm font-mono"><%= JSON.pretty_generate(JSON.parse(@operation_log.details)) rescue @operation_log.details %></pre>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_064457) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
   create_table "a_sku_details", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "net_capacity"
@@ -147,6 +147,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_064457) do
     t.integer "row"
     t.string "title"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "login_logs", force: :cascade do |t|
+    t.string "city"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.datetime "login_at"
+    t.string "province"
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_login_logs_on_user_id"
+  end
+
+  create_table "operation_logs", force: :cascade do |t|
+    t.string "action"
+    t.datetime "created_at", null: false
+    t.text "details"
+    t.string "ip_address"
+    t.integer "resource_id"
+    t.string "resource_type"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_operation_logs_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -434,5 +459,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_064457) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "login_logs", "users"
+  add_foreign_key "operation_logs", "users"
   add_foreign_key "skus", "categories"
 end
