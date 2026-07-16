@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       end
     end
     resources :about_carousels
+    resources :home_products
     resource :site_config, only: [:edit, :update]
     resources :users, only: [:index, :edit, :update, :destroy] do
       member do

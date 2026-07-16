@@ -131,14 +131,30 @@
   <!-- Forward strip -->
   <div class="overflow-hidden mb-4">
     <div class="flex gap-5 w-max" style="animation: cap-marquee 32s linear infinite;">
-      <% 2.times do %>
-        <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.jpg","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"],["cap6.png"],["cap7.png"]].each do |img, label| %>
-          <div class="relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer">
-            <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white font-bold text-sm tracking-wide">cap</span>
+      <% items = @home_products_row1.any? ? @home_products_row1 : [] %>
+      <% if items.any? %>
+        <% 3.times do %>
+          <% items.each do |product| %>
+            <%= link_to product.link.presence || "javascript:void(0)", class: "relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer" do %>
+              <% if product.image.attached? %>
+                <%= image_tag product.image.variant(:marquee), class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+              <% end %>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <span class="text-white font-bold text-sm tracking-wide"><%= product.title %></span>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% 2.times do %>
+          <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.jpg","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"],["cap6.png"],["cap7.png"]].each do |img, label| %>
+            <div class="relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer">
+              <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <span class="text-white font-bold text-sm tracking-wide">cap</span>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>
@@ -146,13 +162,29 @@
   <!-- Reverse strip -->
   <div class="overflow-hidden">
     <div class="flex gap-5 w-max" style="animation: cap-marquee-rev 38s linear infinite;">
-      <% 2.times do %>
-        <% ["2cap1.png", "2cap2.png", "2cap3.png", "2cap4.png", "2cap5.png", "2cap6.png", "2cap7.png", "2cap8.png"].each do |img| %>
-          <div class="relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer">
-            <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
-            <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+      <% items2 = @home_products_row2.any? ? @home_products_row2 : [] %>
+      <% if items2.any? %>
+        <% 3.times do %>
+          <% items2.each do |product| %>
+            <%= link_to product.link.presence || "javascript:void(0)", class: "relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer" do %>
+              <% if product.image.attached? %>
+                <%= image_tag product.image.variant(:marquee), class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+              <% end %>
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                <span class="text-white font-bold text-xs tracking-wide"><%= product.title %></span>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% 2.times do %>
+          <% ["2cap1.png", "2cap2.png", "2cap3.png", "2cap4.png", "2cap5.png", "2cap6.png", "2cap7.png", "2cap8.png"].each do |img| %>
+            <div class="relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer">
+              <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>
