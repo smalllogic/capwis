@@ -261,6 +261,12 @@ en:
     support_email: "Caroline@lincaps.com"
 
   privacy_policy:
+    ip_banner:
+      title: "Visitor Experience & Analytics"
+      content: "We collect your IP address and visit data to improve our services and site security. By continuing, you agree to our data collection policy."
+      accept: "Accept"
+      decline: "Decline"
+      learn_more: "Privacy Policy"
     title: "Privacy Policy"
     introduction: "Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information."
     data_collection:
