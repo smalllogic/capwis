@@ -71,7 +71,6 @@ Rails.application.configure do
   Rails.application.routes.default_url_options = config.action_mailer.default_url_options
 
   config.action_mailer.delivery_method = :resend
-  # 显式手动读取环境变量，确保绝对不会丢失
   config.action_mailer.resend_settings = {
     api_key: ENV["RESEND_API_KEY"]
   }

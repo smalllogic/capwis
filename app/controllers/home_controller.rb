@@ -41,30 +41,10 @@ class HomeController < ApplicationController
     @contact_message = ContactMessage.new(contact_params)
     if @contact_message.save
       begin
-        api_key = ENV["RESEND_API_KEY"]
-        mailer_from = ENV["MAILER_FROM"] || "onboarding@resend.dev"
-        
-        Rails.logger.info "--- EMAIL DEBUG START ---"
-        Rails.logger.info "API Key Present: #{api_key.present?}"
-        Rails.logger.info "API Key Length: #{api_key&.length}"
-        Rails.logger.info "Mailer From: #{mailer_from}"
-        Rails.logger.info "Recipient: #{ENV["CONTACT_FORM_TO"] || "Caroline@lincaps.com"}"
-        
-        # 强制同步发送
-        response = NotificationMailer.contact_notification(@contact_message).deliver_now
-        
-        Rails.logger.info "Email deliver_now called."
-        Rails.logger.info "Response Object: #{response.inspect}"
-        Rails.logger.info "--- EMAIL DEBUG END ---"
+        # 恢复 Resend 正常异步发送
+        NotificationMailer.contact_notification(@contact_message).deliver_later
       rescue => e
-        Rails.logger.error "--- EMAIL ERROR ---"
-        Rails.logger.error "Type: #{e.class}"
-        Rails.logger.error "Message: #{e.message}"
-        # 只有在 Resend SDK 内部报错时才会打印这些
-        if e.respond_to?(:body)
-          Rails.logger.error "Error Body: #{e.body}"
-        end
-        Rails.logger.error "--- END ERROR ---"
+        Rails.logger.error "Failed to queue contact email: #{e.message}"
       end
       redirect_to contact_path, notice: t('home.contact.success_notice')
     else
