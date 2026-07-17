@@ -41,14 +41,30 @@ class HomeController < ApplicationController
     @contact_message = ContactMessage.new(contact_params)
     if @contact_message.save
       begin
-        api_key_present = ENV["RESEND_API_KEY"].present?
-        Rails.logger.info "Attempting to send contact email. Resend API Key present: #{api_key_present}"
-        # 强制同步发送以暴露潜在错误
-        NotificationMailer.contact_notification(@contact_message).deliver_now
-        Rails.logger.info "Email sent successfully via deliver_now"
+        api_key = ENV["RESEND_API_KEY"]
+        mailer_from = ENV["MAILER_FROM"] || "onboarding@resend.dev"
+        
+        Rails.logger.info "--- EMAIL DEBUG START ---"
+        Rails.logger.info "API Key Present: #{api_key.present?}"
+        Rails.logger.info "API Key Length: #{api_key&.length}"
+        Rails.logger.info "Mailer From: #{mailer_from}"
+        Rails.logger.info "Recipient: #{ENV["CONTACT_FORM_TO"] || "Caroline@lincaps.com"}"
+        
+        # 强制同步发送
+        response = NotificationMailer.contact_notification(@contact_message).deliver_now
+        
+        Rails.logger.info "Email deliver_now called."
+        Rails.logger.info "Response Object: #{response.inspect}"
+        Rails.logger.info "--- EMAIL DEBUG END ---"
       rescue => e
-        Rails.logger.error "Failed to send contact email: #{e.class} - #{e.message}"
-        # 如果你想恢复异步，可以将 deliver_now 改回 deliver_later
+        Rails.logger.error "--- EMAIL ERROR ---"
+        Rails.logger.error "Type: #{e.class}"
+        Rails.logger.error "Message: #{e.message}"
+        # 只有在 Resend SDK 内部报错时才会打印这些
+        if e.respond_to?(:body)
+          Rails.logger.error "Error Body: #{e.body}"
+        end
+        Rails.logger.error "--- END ERROR ---"
       end
       redirect_to contact_path, notice: t('home.contact.success_notice')
     else
