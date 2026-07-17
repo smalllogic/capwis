@@ -41,10 +41,18 @@ class HomeController < ApplicationController
     @contact_message = ContactMessage.new(contact_params)
     if @contact_message.save
       begin
-        # 恢复 Resend 正常异步发送
-        NotificationMailer.contact_notification(@contact_message).deliver_later
+        # 记录调试信息到日志
+        Rails.logger.info "[Mailer Debug] Attempting to send contact notification for Message ID: #{@contact_message.id}"
+        Rails.logger.info "[Mailer Debug] From: #{ENV['MAILER_FROM'] || 'onboarding@resend.dev'}"
+        Rails.logger.info "[Mailer Debug] API Key exists: #{ENV['RESEND_API_KEY'].present?}"
+
+        # 使用 deliver_now 强制同步发送，以便在日志中捕获即时错误
+        NotificationMailer.contact_notification(@contact_message).deliver_now
+        
+        Rails.logger.info "[Mailer Debug] Mail sent successfully."
       rescue => e
-        Rails.logger.error "Failed to queue contact email: #{e.message}"
+        Rails.logger.error "[Mailer Error] Delivery failed: #{e.class} - #{e.message}"
+        Rails.logger.error e.backtrace.first(10).join("\n")
       end
       redirect_to contact_path, notice: t('home.contact.success_notice')
     else
