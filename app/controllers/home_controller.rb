@@ -41,9 +41,14 @@ class HomeController < ApplicationController
     @contact_message = ContactMessage.new(contact_params)
     if @contact_message.save
       begin
-        NotificationMailer.contact_notification(@contact_message).deliver_later
+        api_key_present = ENV["RESEND_API_KEY"].present?
+        Rails.logger.info "Attempting to send contact email. Resend API Key present: #{api_key_present}"
+        # 强制同步发送以暴露潜在错误
+        NotificationMailer.contact_notification(@contact_message).deliver_now
+        Rails.logger.info "Email sent successfully via deliver_now"
       rescue => e
-        Rails.logger.error "Failed to queue contact email: #{e.message}"
+        Rails.logger.error "Failed to send contact email: #{e.class} - #{e.message}"
+        # 如果你想恢复异步，可以将 deliver_now 改回 deliver_later
       end
       redirect_to contact_path, notice: t('home.contact.success_notice')
     else
