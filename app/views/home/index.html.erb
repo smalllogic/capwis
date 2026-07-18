@@ -137,7 +137,7 @@
           <% items.each do |product| %>
             <%= link_to product.link.presence || "javascript:void(0)", class: "relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer" do %>
               <% if product.image.attached? %>
-                <%= image_tag product.image.variant(:marquee), class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+                <%= image_tag rails_storage_proxy_path(product.image.variant(:marquee)), class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
               <% end %>
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                 <span class="text-white font-bold text-sm tracking-wide"><%= product.title %></span>
@@ -168,7 +168,7 @@
           <% items2.each do |product| %>
             <%= link_to product.link.presence || "javascript:void(0)", class: "relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer" do %>
               <% if product.image.attached? %>
-                <%= image_tag product.image.variant(:marquee), class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+                <%= image_tag rails_storage_proxy_path(product.image.variant(:marquee)), class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
               <% end %>
               <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
                 <span class="text-white font-bold text-xs tracking-wide"><%= product.title %></span>
@@ -206,7 +206,7 @@
                       style: "transition-delay: #{i * 80}ms" do %>
             <div class="aspect-[3/4] overflow-hidden bg-white">
               <% if category.image.attached? %>
-                <%= image_tag category.image.variant(:featured), class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" %>
+                <%= image_tag rails_storage_proxy_path(category.image.variant(:featured)), class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" %>
               <% else %>
                 <div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-300 italic text-xs">No Image</div>
               <% end %>
