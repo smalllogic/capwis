@@ -147,7 +147,7 @@
         <% end %>
       <% else %>
         <% 2.times do %>
-          <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.jpg","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"],["cap6.png"],["cap7.png"]].each do |img, label| %>
+          <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.webp","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"],["cap6.webp"],["cap7.webp"]].each do |img, label| %>
             <div class="relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer">
               <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -178,7 +178,7 @@
         <% end %>
       <% else %>
         <% 2.times do %>
-          <% ["2cap1.png", "2cap2.png", "2cap3.png", "2cap4.png", "2cap5.png", "2cap6.png", "2cap7.png", "2cap8.png"].each do |img| %>
+          <% ["2cap1.webp", "2cap2.webp", "2cap3.webp", "2cap4.webp", "2cap5.webp", "2cap6.webp", "2cap7.webp", "2cap8.webp"].each do |img| %>
             <div class="relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer">
               <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
               <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
@@ -222,8 +222,7 @@
         <% end %>
       <% else %>
         <% [
-          { img: "product_baseball_cap.png",    name: "Baseball Cap",           tag: "Best Seller", color: "primary",   fit: "cover" }
-
+          { img: "product_baseball_cap.webp",    name: "Baseball Cap",           tag: "Best Seller", color: "primary",   fit: "cover" }
         ].each_with_index do |cap, i| %>
           <div class="reveal-product group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" style="transition-delay: <%= i * 80 %>ms">
             <div class="aspect-[3/4] overflow-hidden bg-white">
