@@ -6,7 +6,7 @@
           <% if @site_config.logo.attached? %>
             <%= image_tag @site_config.logo, class: "h-8 sm:h-10 w-auto max-w-[150px] object-contain", alt: @site_config.name %>
           <% else %>
-            <%= image_tag "hatlogo.png", class: "h-8 sm:h-10 w-auto max-w-[150px] object-contain", alt: "Lincaps" %>
+            <%= image_tag "hatlogo.webp", class: "h-8 sm:h-10 w-auto max-w-[150px] object-contain", alt: "Lincaps Logo" %>
           <% end %>
         </a>
         <p class="mt-2 text-sm text-slate-400"><%= t('footer.company_desc') %></p>

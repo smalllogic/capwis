@@ -5,14 +5,14 @@
         <% if @site_config.logo.attached? %>
           <%= image_tag @site_config.logo, class: "h-6 w-auto object-contain", alt: @site_config.name %>
         <% else %>
-          <%= image_tag "hatlogo.png", class: "h-6 w-auto object-contain", alt: "Lincaps" %>
+          <%= image_tag "hatlogo.webp", class: "h-6 w-auto object-contain", alt: "Lincaps Logo" %>
         <% end %>
       </a>
       <a href="<%= root_path %>" class="hidden md:flex items-center space-x-3 rtl:space-x-reverse mr-4 md:mr-12 flex-shrink-0">
         <% if @site_config.logo.attached? %>
           <%= image_tag @site_config.logo, class: "h-8 sm:h-10 md:h-12 lg:h-14 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[240px] object-contain transition-all duration-300", alt: @site_config.name %>
         <% else %>
-          <%= image_tag "hatlogo.png", class: "h-8 sm:h-10 md:h-12 lg:h-14 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[240px] object-contain transition-all duration-300", alt: "Lincaps" %>
+          <%= image_tag "hatlogo.webp", class: "h-8 sm:h-10 md:h-12 lg:h-14 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[240px] object-contain transition-all duration-300", alt: "Lincaps Logo" %>
         <% end %>
       </a>
     </div>

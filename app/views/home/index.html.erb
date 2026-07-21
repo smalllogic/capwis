@@ -147,11 +147,11 @@
         <% end %>
       <% else %>
         <% 2.times do %>
-          <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.webp","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"],["cap6.webp"],["cap7.webp"]].each do |img, label| %>
+          <% [["cap1.webp","Baseball Cap"],["cap2.webp","Trucker Hat"],["cap3.webp","Bucket Hat"],["cap4.webp","Flat Brim"],["cap5.webp","Wide Brim"],["cap6.webp", "Custom Hat"],["cap7.webp", "Custom Hat"]].each do |img, label| %>
             <div class="relative flex-shrink-0 w-56 h-64 rounded-2xl overflow-hidden group cursor-pointer">
-              <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+              <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700", alt: label || "Custom Hat" %>
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                <span class="text-white font-bold text-sm tracking-wide">cap</span>
+                <span class="text-white font-bold text-sm tracking-wide"><%= label || "cap" %></span>
               </div>
             </div>
           <% end %>
@@ -180,7 +180,7 @@
         <% 2.times do %>
           <% ["2cap1.webp", "2cap2.webp", "2cap3.webp", "2cap4.webp", "2cap5.webp", "2cap6.webp", "2cap7.webp", "2cap8.webp"].each do |img| %>
             <div class="relative flex-shrink-0 w-44 h-52 rounded-2xl overflow-hidden group cursor-pointer">
-              <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" %>
+              <%= image_tag img, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700", alt: "Custom Hat Design" %>
               <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
               </div>
             </div>
@@ -226,7 +226,7 @@
         ].each_with_index do |cap, i| %>
           <div class="reveal-product group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" style="transition-delay: <%= i * 80 %>ms">
             <div class="aspect-[3/4] overflow-hidden bg-white">
-              <%= image_tag cap[:img], class: "w-full h-full #{cap[:fit] == 'contain' ? 'object-contain p-4' : 'object-cover'} group-hover:scale-105 transition-transform duration-700" %>
+              <%= image_tag cap[:img], class: "w-full h-full #{cap[:fit] == 'contain' ? 'object-contain p-4' : 'object-cover'} group-hover:scale-105 transition-transform duration-700", alt: cap[:name] %>
             </div>
             <div class="absolute top-3 left-3">
               <span class="bg-<%= cap[:color] %> text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"><%= cap[:tag] %></span>
@@ -340,18 +340,18 @@
         <div class="grid grid-cols-2 gap-4">
           <div class="space-y-4 pt-12">
             <div class="aspect-square rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
-              <%= image_tag "factory1.jpg", class: "w-full h-full object-cover" %>
+              <%= image_tag "factory1.webp", class: "w-full h-full object-cover", alt: "Lincaps Factory Production Line" %>
             </div>
             <div class="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
-              <%= image_tag "factory2.jpg", class: "w-full h-full object-cover" %>
+              <%= image_tag "factory2.webp", class: "w-full h-full object-cover", alt: "Lincaps Factory Workshop" %>
             </div>
           </div>
           <div class="space-y-4">
             <div class="aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
-              <%= image_tag "factory3.jpg", class: "w-full h-full object-cover" %>
+              <%= image_tag "factory3.webp", class: "w-full h-full object-cover", alt: "Quality Control at Lincaps" %>
             </div>
             <div class="aspect-square rounded-[2rem] overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
-              <%= image_tag "factory4.jpg", class: "w-full h-full object-cover" %>
+              <%= image_tag "factory4.webp", class: "w-full h-full object-cover", alt: "Industrial Embroidery Machines" %>
             </div>
           </div>
         </div>
