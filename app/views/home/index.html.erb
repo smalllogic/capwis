@@ -19,11 +19,14 @@
         class="absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0"
         data-slideshow-target="slide"
       >
-        <%= image_tag "banner#{n}.webp",
-                      class: "w-full h-full object-cover object-center scale-105 transition-transform duration-[5000ms]",
-                      alt: "",
-                      role: "presentation",
-                      loading: idx == 0 ? "eager" : "lazy" %>
+        <picture>
+          <source media="(max-width: 768px)" srcset="<%= asset_path("banner#{n}_mobile.webp") %>">
+          <%= image_tag "banner#{n}.webp",
+                        class: "w-full h-full object-cover object-center scale-105 transition-transform duration-[5000ms]",
+                        alt: "",
+                        role: "presentation",
+                        loading: idx == 0 ? "eager" : "lazy" %>
+        </picture>
       </div>
     <% end %>
   </div>
