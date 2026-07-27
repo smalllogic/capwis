@@ -5,6 +5,8 @@ class Sku < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [800, 800], format: :webp, saver: { quality: 85 }
     attachable.variant :large, resize_to_limit: [1200, 1200], format: :webp, saver: { quality: 85 }
   end
+
+  scope :active, -> { where(status: 'active') }
   
   def sorted_images
     images_attachments.includes(:blob).order(:position, :created_at)

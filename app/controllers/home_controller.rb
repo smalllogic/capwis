@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def all_products
-    @skus_by_category = Sku.where(status: 'active').order(position: :asc, created_at: :desc).group_by(&:category_id)
+    @skus_by_category = Sku.active.includes(:category).order(position: :asc, created_at: :desc).group_by(&:category_id)
     @root_categories = Category.where(parent_id: nil).includes(children: { children: { children: :children } })
   end
 

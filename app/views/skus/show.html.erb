@@ -233,7 +233,7 @@
 
   <!-- 推荐产品 -->
   <%
-    all_in_cat = @sku.category.skus.where(status: 'active').order(position: :asc, created_at: :desc).to_a
+    all_in_cat = @related_skus
     cur_idx    = all_in_cat.index { |s| s.id == @sku.id }
     related    = []
     if cur_idx

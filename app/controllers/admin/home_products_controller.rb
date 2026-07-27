@@ -2,7 +2,7 @@ class Admin::HomeProductsController < Admin::BaseController
   before_action :set_home_product, only: [:edit, :update, :destroy]
 
   def index
-    @home_products = HomeProduct.unscoped.order(row: :asc, position: :asc, id: :desc)
+    @home_products = HomeProduct.unscoped.with_attached_image.order(row: :asc, position: :asc, id: :desc)
   end
 
   def new

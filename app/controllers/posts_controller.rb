@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.published.page(params[:page]).per(20)
+    @posts = Post.published.with_attached_cover_image.page(params[:page]).per(20)
   end
 
   def show

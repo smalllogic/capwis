@@ -8,5 +8,8 @@ class SkusController < ApplicationController
     end
 
     @kind = @sku.category.category_kind
+    
+    # Preload related products to avoid N+1 in view
+    @related_skus = @sku.category.skus.active.with_attached_images.includes(:category).order(position: :asc, created_at: :desc).to_a
   end
 end
