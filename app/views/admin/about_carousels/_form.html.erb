@@ -45,7 +45,7 @@
     <div class="space-y-2">
       <%= f.label :image, "上传图片 (建议 600x800)", class: "block text-sm font-bold text-gray-700" %>
       <div class="flex items-center space-x-4">
-        <% if about_carousel.persisted? && about_carousel.image.attached? %>
+        <% if about_carousel.persisted? && about_carousel.image.attached? && about_carousel.image.persisted? %>
           <div class="h-24 w-24 rounded-lg overflow-hidden border border-gray-200">
             <%= image_tag about_carousel.image.variant(:thumb), class: "h-full w-full object-cover" %>
           </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_27_183000) do
   create_table "a_sku_details", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "net_capacity"
@@ -31,6 +31,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
     t.integer "position"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["active", "position"], name: "index_carousels_on_active_position"
   end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -125,6 +126,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
     t.integer "position"
     t.string "slug"
     t.datetime "updated_at", null: false
+    t.index ["category_kind", "hidden", "position"], name: "index_categories_on_kind_hidden_position"
     t.index ["parent_id"], name: "index_categories_on_parent_id"
     t.index ["slug"], name: "index_categories_on_slug"
   end
@@ -147,6 +149,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
     t.integer "row"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["active", "row", "position"], name: "index_home_products_on_active_row_position"
   end
 
   create_table "login_logs", force: :cascade do |t|
@@ -184,6 +187,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
     t.text "summary"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["status", "published_at"], name: "index_posts_on_status_published_at"
   end
 
   create_table "site_configs", force: :cascade do |t|
@@ -234,6 +238,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_070238) do
     t.datetime "updated_at", null: false
     t.string "visor"
     t.index ["category_id"], name: "index_skus_on_category_id"
+    t.index ["status", "position", "created_at"], name: "index_skus_on_status_position_created_at"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|

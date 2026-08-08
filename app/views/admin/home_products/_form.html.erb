@@ -35,7 +35,7 @@
     <div class="space-y-2">
       <%= f.label :image, "上传图片", class: "block text-sm font-medium text-slate-700" %>
       <%= f.file_field :image, class: "w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" %>
-      <% if home_product.image.attached? %>
+      <% if home_product.image.attached? && home_product.image.persisted? %>
         <div class="mt-2">
           <%= image_tag home_product.image.variant(:thumb), class: "h-20 w-20 object-cover rounded border" %>
         </div>

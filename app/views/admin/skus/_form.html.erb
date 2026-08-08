@@ -50,6 +50,7 @@
         <% if @sku.images.attached? %>
           <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
             <% @sku.sorted_images.each do |image| %>
+              <% next unless image.persisted? %>
               <div class="relative group border border-slate-200 rounded-lg p-2 bg-slate-50">
                 <div class="mb-2">
                   <% begin %>

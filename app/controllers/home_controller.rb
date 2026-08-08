@@ -2,14 +2,14 @@ class HomeController < ApplicationController
   before_action :check_submission_rate_limit, only: [:create_contact]
 
   def index
-    @featured_categories = Category.unscoped.where(featured: true).order(featured_position: :asc, id: :desc).with_attached_image
-    @home_products_row1 = HomeProduct.active.row1.with_attached_image
-    @home_products_row2 = HomeProduct.active.row2.with_attached_image
+    @featured_categories = Category.unscoped.where(featured: true).order(featured_position: :asc, id: :desc)
+    @home_products_row1 = HomeProduct.active.row1
+    @home_products_row2 = HomeProduct.active.row2
   end
 
   def all_products
     @skus_by_category = Sku.active.includes(:category).order(position: :asc, created_at: :desc).group_by(&:category_id)
-    @root_categories = Category.where(parent_id: nil).includes(children: { children: { children: :children } })
+    @root_categories = Category.where(parent_id: nil).includes(:children)
   end
 
   def contact
@@ -17,7 +17,7 @@ class HomeController < ApplicationController
   end
 
   def about
-    @about_carousels = AboutCarousel.active.with_attached_image
+    @about_carousels = AboutCarousel.active
   end
 
   def privacy
