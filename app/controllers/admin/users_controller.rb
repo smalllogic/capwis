@@ -7,6 +7,19 @@ module Admin
       @users = User.order(created_at: :desc)
     end
 
+    def new
+      @user = User.new
+    end
+
+    def create
+      @user = User.new(user_params)
+      if @user.save
+        redirect_to admin_users_path, notice: "新用户已成功创建。"
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
+
     def edit
     end
 
@@ -51,7 +64,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:role)
+      params.require(:user).permit(:email, :password, :role)
     end
   end
 end

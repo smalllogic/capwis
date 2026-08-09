@@ -43,7 +43,7 @@ Rails.application.routes.draw do
       end
     end
     resource :site_config, only: [:edit, :update]
-    resources :users, only: [:index, :edit, :update, :destroy] do
+    resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
       member do
         patch :promote
       end

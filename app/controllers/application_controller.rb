@@ -27,12 +27,7 @@ class ApplicationController < ActionController::Base
     if cookies[:ip_tracking_allowed] == "false"
       real_ip = "0000.0000.0000"
     else
-      forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
-      real_ip = if forwarded_for.present?
-                  forwarded_for.split(',').first&.strip
-                else
-                  request.env['HTTP_X_REAL_IP'] || request.remote_ip
-                end
+      real_ip = request.remote_ip
     end
 
     last_visit = VisitRecord.where(session_id: session_id)

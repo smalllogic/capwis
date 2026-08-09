@@ -1,0 +1,54 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">创建新用户</h1>
+    <p class="mt-1 text-sm text-gray-500">手动指定账号、密码和身份角色</p>
+  </div>
+
+  <div class="bg-white shadow rounded-lg p-6">
+    <%= form_with(model: [:admin, @user], local: true) do |f| %>
+      <% if @user.errors.any? %>
+        <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-400 text-red-700">
+          <h3 class="text-sm font-medium">创建失败：</h3>
+          <ul class="mt-2 text-xs list-disc list-inside">
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-4">
+        <%= f.label :email, "电子邮箱", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.email_field :email, required: true, class: "block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder: "example@domain.com" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :password, "登录密码", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.password_field :password, required: true, autocomplete: "new-password", class: "block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+
+      <div class="mb-6">
+        <%= f.label :role, "角色分配", class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <div class="space-y-4">
+          <div class="flex items-center">
+            <%= f.radio_button :role, "user", checked: true, class: "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" %>
+            <%= f.label :role_user, "注册人员 (普通访问权限)", class: "ml-3 block text-sm font-medium text-gray-700" %>
+          </div>
+          <div class="flex items-center">
+            <%= f.radio_button :role, "editor", class: "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" %>
+            <%= f.label :role_editor, "编辑人员 (可修改产品、分类、Blog，不可修改系统配置)", class: "ml-3 block text-sm font-medium text-gray-700" %>
+          </div>
+          <div class="flex items-center">
+            <%= f.radio_button :role, "admin", class: "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" %>
+            <%= f.label :role_admin, "小管理员 (拥有大部分权限，不可删除大管理员)", class: "ml-3 block text-sm font-medium text-gray-700" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end space-x-4">
+        <%= link_to "取消", admin_users_path, class: "text-sm font-medium text-gray-500 hover:text-gray-700" %>
+        <%= f.submit "立即创建", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      </div>
+    <% end %>
+  </div>
+</div>

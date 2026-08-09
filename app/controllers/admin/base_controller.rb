@@ -14,12 +14,7 @@ class Admin::BaseController < ApplicationController
     return if response.status >= 400
     
     # 提取真实 IP
-    forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
-    real_ip = if forwarded_for.present?
-                forwarded_for.split(',').first&.strip
-              else
-                request.env['HTTP_X_REAL_IP'] || request.remote_ip
-              end
+    real_ip = request.remote_ip
 
     details = {
       path: request.path,
@@ -42,7 +37,7 @@ class Admin::BaseController < ApplicationController
   end
 
   def filter_sensitive_params(params)
-    sensitive_keys = %w[password password_confirmation token secret]
+    sensitive_keys = %w[password password_confirmation token secret key salt crypt]
     params.each do |k, v|
       if v.is_a?(Hash)
         filter_sensitive_params(v)
