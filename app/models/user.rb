@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :rememberable, :validatable, :lockable
 
+  has_many :login_logs, dependent: :destroy
+  has_many :operation_logs, dependent: :destroy
+
   def super_admin?
     role == 'super_admin' || admin
   end

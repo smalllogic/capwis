@@ -28,13 +28,17 @@ class Admin::BaseController < ApplicationController
       status: response.status
     }
 
-    OperationLog.create(
-      user: current_user,
-      action: "#{controller_name}##{action_name}",
-      resource_type: controller_name.classify,
-      details: details.to_json,
-      ip_address: real_ip
-    )
+    begin
+      OperationLog.create(
+        user: current_user,
+        action: "#{controller_name}##{action_name}",
+        resource_type: controller_name.classify,
+        details: details.to_json,
+        ip_address: real_ip
+      )
+    rescue => e
+      Rails.logger.error "Failed to track operation: #{e.message}"
+    end
   end
 
   def filter_sensitive_params(params)

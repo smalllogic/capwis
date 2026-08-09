@@ -24,8 +24,24 @@ module Admin
     end
 
     def destroy
-      @user.destroy
-      redirect_to admin_users_path, notice: "User was successfully deleted."
+      if @user == current_user
+        redirect_to admin_users_path, alert: "您不能删除自己的账户。"
+        return
+      end
+
+      ActiveRecord::Base.transaction do
+        @user.login_logs.destroy_all
+        @user.operation_logs.destroy_all
+        if @user.destroy
+          redirect_to admin_users_path, notice: "用户已成功删除。"
+        else
+          redirect_to admin_users_path, alert: "删除用户失败：#{@user.errors.full_messages.join(', ')}"
+        end
+      end
+    rescue ActiveRecord::InvalidForeignKey
+      redirect_to admin_users_path, alert: "无法删除用户，因为该用户仍有关联的日志记录或其他数据。"
+    rescue => e
+      redirect_to admin_users_path, alert: "删除过程中发生错误：#{e.message}"
     end
 
     private
