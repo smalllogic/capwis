@@ -2,7 +2,6 @@
   content_for :title, @sku.meta_title.presence || "#{@sku.name} - #{t('home.index.hero_title_2')}"
   content_for :meta_description, @sku.meta_description.presence || "#{@sku.name} - Custom #{@sku.category.localized_name} manufacturer from Qingdao, China. OEM & ODM available. MOQ: #{@sku.moq.presence || '100 pcs'}. Factory-direct pricing from lincaps."
   content_for :meta_keywords, @sku.meta_keywords.presence || "#{@sku.name}, #{@sku.category.localized_name}, custom hats, OEM hats, hat manufacturer, Qingdao Lincaps"
-  content_for :canonical_url, sku_url(@sku)
 %>
 <div class="max-w-screen-xl mx-auto px-4 py-12">
   <!-- 顶部面包屑导航 -->

@@ -5,7 +5,6 @@
     <meta name="description" content="<%= content_for(:meta_description) || @site_config.meta_description.presence || "Lincaps is a professional hat manufacturer based in Qingdao, China, with 20 years of manufacturing experience." %>">
     <meta name="keywords" content="<%= content_for(:meta_keywords) || @site_config.meta_keywords.presence || "baseball caps, trucker hats, customized hats, hat manufacturer, Qingdao Lincaps" %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="canonical" href="<%= content_for(:canonical_url) || request.original_url.split('?').first %>">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
