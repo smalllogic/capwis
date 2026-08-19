@@ -34,6 +34,14 @@
     content_for :meta_keywords, @current_category.meta_keywords
   end
 
+  if @current_category
+    content_for :canonical_url, channel_url(@kind, category_id: @current_category)
+  elsif @kind
+    content_for :canonical_url, channel_url(@kind)
+  else
+    content_for :canonical_url, categories_url
+  end
+
   # 当前分类/频道的显示名称 —— 用于 Banner 上的动态文字
   heading = if @current_category
               @current_category.localized_name
